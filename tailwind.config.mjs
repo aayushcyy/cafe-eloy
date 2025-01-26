@@ -10,6 +10,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primaryRed: "#d21c27",
+        primaryText: "#331a0b",
+      },
+      fontFamily: {
+        montserrat: ["var(--font-montserrat)", "sans-serif"],
+        playfair: ["var(--font-playfair)", "sans-serif"],
+        tannimbus: ["tannimbus"],
       },
     },
   },

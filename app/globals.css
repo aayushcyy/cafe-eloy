@@ -14,6 +14,11 @@
   }
 }
 
+@font-face {
+  font-family: "tannimbus"; /* Replace with your desired font name */
+  src: url("/fonts/tannimbus.otf") format("otf");
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
