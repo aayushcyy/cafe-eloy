@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Navbar from "./Components/Navbar";
 import Button from "./Components/Button";
+import pasta from "../public/eatIllustration.png";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
           </div>
           <div className="flex gap-5">
             <Button
-              to="/"
+              to="/book"
               animation={true}
               classname="bg-primaryRed text-white text-sm px-5 py-3 rounded-full font-montserrat font-medium"
             >
@@ -44,15 +45,14 @@ export default function Home() {
             <div className="">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
-        <div className="bg-green-300 w-1/2">
+        <div className="flex items-center justify-center w-1/2 relative">
           <Image
-            src={
-              "https://png.pngtree.com/png-clipart/20230927/original/pngtree-penne-with-white-sauce-png-image_13146509.png"
-            }
-            alt=""
-            width={100}
-            height={100}
-            className="w-56"
+            src={pasta} // The imported image
+            alt="Pasta Dish" // Important for accessibility
+            width={550}
+            height={550}
+            objectFit="cover"
+            className="absolute z-20"
           />
         </div>
       </div>
