@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { motion } from "motion/react";
 import dayjs from "dayjs";
+import BookingDiv from "../Components/BookingDiv";
 
 export default function page() {
   const [optionOpen, setOptionOpen] = useState(false);
@@ -37,9 +38,9 @@ export default function page() {
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} />
-      <div className="w-full h-[90vh] bg-purple-300 flex justify-between">
+      <div className="w-full h-[90vh] flex justify-center">
         {/* Input Container */}
-        <div className="w-[40%] bg-yellow-300 flex  gap-7">
+        <div className="w-[40%] flex  gap-7">
           {/* Location Selector */}
           <div ref={locationDivRef} className="flex flex-col w-[60%] gap-2">
             <p className="text-sm text-gray-400">Location</p>
@@ -143,7 +144,15 @@ export default function page() {
             </div>
           </div>
         </div>
-        <div></div>
+        {/* showing booking options */}
+        <div className="w-[40%] flex flex-col">
+          <div className="w-[85%] flex flex-col gap-2">
+            <p className="text-sm text-gray-400">Available Slots</p>
+            <div className="flex flex-col gap-[10px]">
+              <BookingDiv />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
