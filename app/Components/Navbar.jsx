@@ -26,14 +26,14 @@ export default function Navbar({ showBook = true, uData }) {
   const pathName = usePathname();
 
   //fetching user data
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const response = await fetch("/api/user");
-      const data = await response.json();
-      setUserData(data);
-    };
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     const response = await fetch("/api/user");
+  //     const data = await response.json();
+  //     setUserData(data);
+  //   };
+  //   fetchUserData();
+  // }, []);
 
   //closing the profile if clicked outside of it
   useEffect(() => {
@@ -108,7 +108,7 @@ export default function Navbar({ showBook = true, uData }) {
                 <ShoppingBagIcon className="size-5 stroke-1.5" />
               </div>
             )}
-            {showBook && (
+            {showBook && !uData && (
               <div
                 className="flex flex-col group relative"
                 onMouseEnter={() => setAnimateHover4(true)}
@@ -124,7 +124,7 @@ export default function Navbar({ showBook = true, uData }) {
                 ></motion.div>
               </div>
             )}
-            {!showBook ? (
+            {!showBook && !uData ? (
               <Link href={"/login"}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -147,12 +147,14 @@ export default function Navbar({ showBook = true, uData }) {
                 </motion.div>
               </Link>
             )}
-            <div>
-              <UserCircleIcon
-                className="size-9 cursor-pointer stroke-1.5"
-                onClick={() => setOpenProfile(!openProfile)}
-              />
-            </div>
+            {uData && (
+              <div>
+                <UserCircleIcon
+                  className="size-9 cursor-pointer stroke-1.5"
+                  onClick={() => setOpenProfile(!openProfile)}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -181,8 +183,8 @@ export default function Navbar({ showBook = true, uData }) {
                     AC
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-2xl">Aayush Chaudhary</p>
-                    <p className="text-[#000000a7]">+91 8889629371</p>
+                    <p className="text-2xl">{uData.name || "User"}</p>
+                    <p className="text-[#000000a7]">{uData.email || ""}</p>
                   </div>
                 </div>
                 {/* Upcoming Bookings */}

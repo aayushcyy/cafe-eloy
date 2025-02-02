@@ -26,7 +26,7 @@ export default function page() {
   const [userData, setUserData] = useState(null);
   const router = useRouter();
 
-  // Signup
+  // Signup working correctly
   const handleSignup = async (e) => {
     e.preventDefault();
     if (!name || !email || !password) {
@@ -46,6 +46,7 @@ export default function page() {
       const data = await response.json();
       if (response.ok) {
         console.log("User signup successful: ", data);
+        console.log("Name of logged in user: ", data.name);
         setUserData(data);
         router.push("/book");
       } else {
@@ -92,7 +93,7 @@ export default function page() {
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
-      <Navbar uData={userData} />
+      <Navbar uData={userData ? userData : null} />
       <div className="w-full h-[90vh] gap-28 flex relative">
         <div className="w-[50%] h-full flex pt-40 justify-center">
           <p className="text-7xl font-bold italic -rotate-6">

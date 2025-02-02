@@ -1,6 +1,7 @@
 import { auth, db } from "@/firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { getIdToken } from "firebase/auth";
 
 export async function POST(req) {
   try {
@@ -23,8 +24,17 @@ export async function POST(req) {
       email: email,
     });
 
+    // Get the Firebase ID token
+    const token = await getIdToken(user);
+
     return new Response(
-      JSON.stringify({ success: true, message: "User signed up successfully" }),
+      JSON.stringify({
+        success: true,
+        message: "User signed up successfully",
+        email: user.email,
+        name: user.displayName || name, // If name is not available, use the provided name
+        token: token, // Use Firebase ID token
+      }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
