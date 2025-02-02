@@ -12,7 +12,7 @@ import {
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 
-export default function Navbar({ showBook = true, uData }) {
+export default function Navbar({ showBook = true }) {
   //hover animation hooks
   const [animateHover, setAnimateHover] = useState(false);
   const [animateHover2, setAnimateHover2] = useState(false);
@@ -24,6 +24,17 @@ export default function Navbar({ showBook = true, uData }) {
 
   //extracting path name
   const pathName = usePathname();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setUserData(user);
+      console.log("user found from local storage.", user);
+      console.log("username", user.displayName);
+    } else {
+      console.log("user is not at local storage");
+    }
+  }, []);
 
   //fetching user data
   // useEffect(() => {
@@ -108,7 +119,7 @@ export default function Navbar({ showBook = true, uData }) {
                 <ShoppingBagIcon className="size-5 stroke-1.5" />
               </div>
             )}
-            {showBook && !uData && (
+            {showBook && !userData && (
               <div
                 className="flex flex-col group relative"
                 onMouseEnter={() => setAnimateHover4(true)}
@@ -124,7 +135,7 @@ export default function Navbar({ showBook = true, uData }) {
                 ></motion.div>
               </div>
             )}
-            {!showBook && !uData ? (
+            {!showBook && !userData ? (
               <Link href={"/login"}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -147,7 +158,7 @@ export default function Navbar({ showBook = true, uData }) {
                 </motion.div>
               </Link>
             )}
-            {uData && (
+            {userData && (
               <div>
                 <UserCircleIcon
                   className="size-9 cursor-pointer stroke-1.5"
@@ -183,8 +194,8 @@ export default function Navbar({ showBook = true, uData }) {
                     AC
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-2xl">{uData.name || "User"}</p>
-                    <p className="text-[#000000a7]">{uData.email || ""}</p>
+                    <p className="text-2xl">{userData.name || "User"}</p>
+                    <p className="text-[#000000a7]">{userData.email || ""}</p>
                   </div>
                 </div>
                 {/* Upcoming Bookings */}
