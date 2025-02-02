@@ -12,17 +12,28 @@ import {
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 
-export default function Navbar({ showBook = true }) {
+export default function Navbar({ showBook = true, uData }) {
   //hover animation hooks
   const [animateHover, setAnimateHover] = useState(false);
   const [animateHover2, setAnimateHover2] = useState(false);
   const [animateHover3, setAnimateHover3] = useState(false);
   const [animateHover4, setAnimateHover4] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [userData, setUserData] = useState(null);
   const profileDivRef = useRef(null);
 
   //extracting path name
   const pathName = usePathname();
+
+  //fetching user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const response = await fetch("/api/user");
+      const data = await response.json();
+      setUserData(data);
+    };
+    fetchUserData();
+  }, []);
 
   //closing the profile if clicked outside of it
   useEffect(() => {

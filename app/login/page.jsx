@@ -23,6 +23,7 @@ export default function page() {
   const [showSignup, setShowSignup] = useState(true);
   const [signupError, setSignupError] = useState(null);
   const [loginError, setLoginError] = useState(null);
+  const [userData, setUserData] = useState(null);
   const router = useRouter();
 
   // Signup
@@ -34,7 +35,7 @@ export default function page() {
     }
     setLoading(true);
     try {
-      const response = await fetch("api/auth/signup", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,6 +46,7 @@ export default function page() {
       const data = await response.json();
       if (response.ok) {
         console.log("User signup successful: ", data);
+        setUserData(data);
         router.push("/book");
       } else {
         console.error("Error signing up: ", data.message);
@@ -65,7 +67,7 @@ export default function page() {
     }
     setLoading(true);
     try {
-      const response = await fetch("api/auth/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,6 +78,7 @@ export default function page() {
       const data = await response.json();
       if (response.ok) {
         console.log("User login successful: ", data);
+        setUserData(data);
         router.push("/book");
       } else {
         console.error("Error logging in: ", data.message);
@@ -89,7 +92,7 @@ export default function page() {
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
-      <Navbar />
+      <Navbar uData={userData} />
       <div className="w-full h-[90vh] gap-28 flex relative">
         <div className="w-[50%] h-full flex pt-40 justify-center">
           <p className="text-7xl font-bold italic -rotate-6">
