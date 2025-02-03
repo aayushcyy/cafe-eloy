@@ -13,6 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Loader from "../Components/Loader";
+import useMyStore from "../store/store";
 
 export default function page() {
   const [name, setName] = useState("");
@@ -24,6 +25,9 @@ export default function page() {
   const [signupError, setSignupError] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [userData, setUserData] = useState(null);
+
+  const { setIsLoggedIn, isLoggedIn } = useMyStore();
+
   const router = useRouter();
 
   // Signup working correctly
@@ -74,14 +78,15 @@ export default function page() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log("User login successful: ", data);
-        setUserData(data);
-        router.push("/book");
-      } else {
-        console.error("Error logging in: ", data.message);
+      if (!response.ok) {
+        const errorData = await response.text(); // Read response text
+        throw new Error(`Error: ${errorData}`);
       }
+
+      const data = await response.json();
+      console.log("User login successful: ", data);
+      setIsLoggedIn(true);
+      router.push("/book");
     } catch (error) {
       console.error("Error logging in: ", error);
     } finally {
@@ -151,7 +156,10 @@ export default function page() {
                 )}
               </div>
               <div>
-                <button className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-lg text-center text-white">
+                <button
+                  className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-lg text-center text-white"
+                  onClick={handleLogin}
+                >
                   Login
                 </button>
               </div>

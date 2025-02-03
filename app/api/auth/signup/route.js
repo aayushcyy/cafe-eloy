@@ -19,10 +19,12 @@ export async function POST(req) {
       password
     );
     const user = userCrendentials.user;
+
     //saving user data to firestore
     await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: email,
+      createdAt: new Date(),
     });
 
     // Get the Firebase ID token

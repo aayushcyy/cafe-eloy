@@ -13,6 +13,7 @@ import {
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
+import useStore from "../store/store";
 
 export default function Navbar({ showBook = true }) {
   //hover animation hooks
@@ -24,14 +25,24 @@ export default function Navbar({ showBook = true }) {
   const [userData, setUserData] = useState(null);
   const profileDivRef = useRef(null);
 
+  //accessing zustand method
+  const { isLoggedIn } = useStore();
+
   //extracting path name
   const pathName = usePathname();
 
   //getting cookie
   useEffect(() => {
-    const user = getCookie("user");
-    if (user) setUserData(JSON.parse(parse));
-  }, []);
+    if (isLoggedIn) {
+      console.log("is loggedin was affected: isLoggedIn", isLoggedIn);
+      const user = getCookie("user");
+      console.log("reached to user, user: ", user);
+      if (user) setUserData(JSON.parse(user));
+      console.log("set the user");
+    } else {
+      setUserData(null);
+    }
+  }, [isLoggedIn]);
 
   //Signout function
   const handleSignOut = () => {
