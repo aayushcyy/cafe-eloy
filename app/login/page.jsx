@@ -46,7 +46,6 @@ export default function page() {
       const data = await response.json();
       if (response.ok) {
         console.log("User signup successful: ", data);
-        localStorage.setItem("user", JSON.stringify(data));
         router.push("/book");
       } else {
         console.error("Error signing up: ", data.message);

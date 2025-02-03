@@ -8,9 +8,11 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   ArrowLeftIcon,
+  ArrowLeftStartOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import { getCookie, deleteCookie } from "cookies-next";
 
 export default function Navbar({ showBook = true }) {
   //hover animation hooks
@@ -25,16 +27,18 @@ export default function Navbar({ showBook = true }) {
   //extracting path name
   const pathName = usePathname();
 
+  //getting cookie
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setUserData(user);
-      console.log("user found from local storage.", user);
-      console.log("username", user.displayName);
-    } else {
-      console.log("user is not at local storage");
-    }
+    const user = getCookie("user");
+    if (user) setUserData(JSON.parse(parse));
   }, []);
+
+  //Signout function
+  const handleSignOut = () => {
+    deleteCookie("user");
+    setUserData(null);
+    window.location.reload();
+  };
 
   //fetching user data
   // useEffect(() => {
@@ -248,6 +252,12 @@ export default function Navbar({ showBook = true }) {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div
+                className="flex absolute bottom-10 left-5 cursor-pointer underline text-black"
+                onClick={handleSignOut}
+              >
+                <ArrowLeftStartOnRectangleIcon className="size-6" /> Logout
               </div>
             </div>
           </motion.div>

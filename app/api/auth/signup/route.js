@@ -2,6 +2,7 @@ import { auth, db } from "@/firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { getIdToken } from "firebase/auth";
+import { cookies } from "next/headers";
 
 export async function POST(req) {
   try {
@@ -27,14 +28,16 @@ export async function POST(req) {
     // Get the Firebase ID token
     const token = await getIdToken(user);
 
+    //setting cookies
+    cookies().set("user", JSON.stringify({ name, email }), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 2,
+      path: "/",
+    });
+
     return new Response(
-      JSON.stringify({
-        success: true,
-        message: "User signed up successfully",
-        email: user.email,
-        name: user.displayName || name, // If name is not available, use the provided name
-        token: token, // Use Firebase ID token
-      }),
+      JSON.stringify({ success: true, message: "User Signedup successful!" }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
