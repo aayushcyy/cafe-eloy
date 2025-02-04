@@ -34,11 +34,14 @@ export default function Navbar({ showBook = true }) {
   //getting cookie
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("is loggedin was affected: isLoggedIn", isLoggedIn);
+      //test8
+      console.log("8. is loggedin was affected: isLoggedIn", isLoggedIn);
       const user = getCookie("user");
-      console.log("reached to user, user: ", user);
+      //test9
+      console.log("9. got the usercookie: ", user);
       if (user) setUserData(JSON.parse(user));
-      console.log("set the user");
+      //test10
+      console.log("10. set the user");
     } else {
       setUserData(null);
     }

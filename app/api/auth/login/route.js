@@ -7,22 +7,36 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const { email, password } = body;
+    //test1
+    console.log("1. body is: ", body);
     const userCrendentials = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
     const user = userCrendentials.user;
+    //test2
+    console.log("2. user is, ", user);
 
     //Fetch user data from firestore
     const userDetail = await getDoc(doc(db, "users", user.uid));
+
+    //test3
+    console.log("3. user details from firestore: ", userDetail);
+
     if (!userDetail.exists()) {
       return new Response(
-        JSON.stringify({ success: false, message: "User not found!" }),
+        JSON.stringify({
+          success: false,
+          message: "e1. User(userdetail doesn't exist) not found!",
+        }),
         { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
+
     const userData = userDetail.data();
+    //test4
+    console.log("4. got the userdata from userdetail: ", userData);
 
     //setting cookies
     cookies().set(
@@ -36,10 +50,13 @@ export async function POST(req) {
       }
     );
 
+    //test5
+    console.log("5. cookie been set!");
+
     return new Response(
       JSON.stringify({
         success: true,
-        message: "User logged in successful!",
+        message: "6. User logged in successful!",
         userDetail,
       }),
       {
@@ -48,7 +65,7 @@ export async function POST(req) {
       }
     );
   } catch (error) {
-    console.error("Signup Error:", error);
+    console.error("e2. Signup Error:", error);
     return new Response(
       JSON.stringify({ message: error.message || "Internal server error" }),
       {

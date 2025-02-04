@@ -80,15 +80,18 @@ export default function page() {
 
       if (!response.ok) {
         const errorData = await response.text(); // Read response text
-        throw new Error(`Error: ${errorData}`);
+        throw new Error(`e3. Error: ${errorData}`);
       }
 
       const data = await response.json();
-      console.log("User login successful: ", data);
-      setIsLoggedIn(true);
+
+      //test7
+      console.log("7. User login successful: ", data);
+
       router.push("/book");
+      setIsLoggedIn(true);
     } catch (error) {
-      console.error("Error logging in: ", error);
+      console.error("e4. Error logging in: ", error);
     } finally {
       setLoading(false);
     }
