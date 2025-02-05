@@ -26,16 +26,16 @@ export default function Navbar({ showBook = true }) {
   const profileDivRef = useRef(null);
 
   //accessing zustand method
-  const { isLoggedIn } = useStore();
+  const { isLoggedIn, setZustandUser } = useStore();
 
-  //extracting path name
   const pathName = usePathname();
 
-  // Use useEffect to fetch cookie data and set user data (Prevents re-renders)
+  // fetching cookie data and seting user data
   useEffect(() => {
     const user = getCookie("user");
     if (user) {
       setUserData(JSON.parse(user));
+      setZustandUser(JSON.parse(user));
     }
   }, [isLoggedIn]);
 
@@ -194,8 +194,12 @@ export default function Navbar({ showBook = true }) {
                     AC
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-2xl">{userData.name || "User"}</p>
-                    <p className="text-[#000000a7]">{userData.email || ""}</p>
+                    <p className="text-2xl">
+                      {userData ? userData.name : "User"}
+                    </p>
+                    <p className="text-[#000000a7]">
+                      {userData ? userData.email : ""}
+                    </p>
                   </div>
                 </div>
                 {/* Upcoming Bookings */}
