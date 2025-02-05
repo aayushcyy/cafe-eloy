@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import {
   UserIcon,
@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import Loader from "../Components/Loader";
 import useMyStore from "../store/store";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function page() {
   const [name, setName] = useState("");
@@ -79,19 +80,29 @@ export default function page() {
       });
 
       if (!response.ok) {
-        const errorData = await response.text(); // Read response text
-        throw new Error(`e3. Error: ${errorData}`);
+        const errorData = await response.text();
+        throw new Error(`Error: ${errorData}`);
       }
 
       const data = await response.json();
+      console.log("User login successful: ", data);
 
-      //test7
-      console.log("7. User login successful: ", data);
+      // Set Cookie for the user
+      setCookie(
+        "user",
+        JSON.stringify({
+          name: data.userData.name,
+          email: data.userData.email,
+        })
+      );
 
-      router.push("/book");
+      console.log("cookie has been set!");
+
+      // Redirect user
       setIsLoggedIn(true);
+      router.push("/book");
     } catch (error) {
-      console.error("e4. Error logging in: ", error);
+      console.error("Error logging in: ", error);
     } finally {
       setLoading(false);
     }

@@ -31,19 +31,11 @@ export default function Navbar({ showBook = true }) {
   //extracting path name
   const pathName = usePathname();
 
-  //getting cookie
+  // Use useEffect to fetch cookie data and set user data (Prevents re-renders)
   useEffect(() => {
-    if (isLoggedIn) {
-      //test8
-      console.log("8. is loggedin was affected: isLoggedIn", isLoggedIn);
-      const user = getCookie("user");
-      //test9
-      console.log("9. got the usercookie: ", user);
-      if (user) setUserData(JSON.parse(user));
-      //test10
-      console.log("10. set the user");
-    } else {
-      setUserData(null);
+    const user = getCookie("user");
+    if (user) {
+      setUserData(JSON.parse(user));
     }
   }, [isLoggedIn]);
 
@@ -53,16 +45,6 @@ export default function Navbar({ showBook = true }) {
     setUserData(null);
     window.location.reload();
   };
-
-  //fetching user data
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const response = await fetch("/api/user");
-  //     const data = await response.json();
-  //     setUserData(data);
-  //   };
-  //   fetchUserData();
-  // }, []);
 
   //closing the profile if clicked outside of it
   useEffect(() => {

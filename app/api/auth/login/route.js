@@ -1,7 +1,6 @@
 import { auth, db } from "@/firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { cookies } from "next/headers";
 
 export async function POST(req) {
   try {
@@ -38,18 +37,6 @@ export async function POST(req) {
     //test4
     console.log("4. got the userdata from userdetail: ", userData);
 
-    //setting cookies
-    cookies().set(
-      "user",
-      JSON.stringify({ name: userData.name, email: userData.email }),
-      {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 2,
-        path: "/",
-      }
-    );
-
     //test5
     console.log("5. cookie been set!");
 
@@ -57,7 +44,7 @@ export async function POST(req) {
       JSON.stringify({
         success: true,
         message: "6. User logged in successful!",
-        userDetail,
+        userData,
       }),
       {
         status: 200,
@@ -65,7 +52,7 @@ export async function POST(req) {
       }
     );
   } catch (error) {
-    console.error("e2. Signup Error:", error);
+    console.error("e1. Signup Error:", error);
     return new Response(
       JSON.stringify({ message: error.message || "Internal server error" }),
       {
