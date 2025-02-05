@@ -14,14 +14,9 @@ export async function POST(req) {
       password
     );
     const user = userCrendentials.user;
-    //test2
-    console.log("2. user is, ", user);
 
     //Fetch user data from firestore
     const userDetail = await getDoc(doc(db, "users", user.uid));
-
-    //test3
-    console.log("3. user details from firestore: ", userDetail);
 
     if (!userDetail.exists()) {
       return new Response(
@@ -34,16 +29,11 @@ export async function POST(req) {
     }
 
     const userData = userDetail.data();
-    //test4
-    console.log("4. got the userdata from userdetail: ", userData);
-
-    //test5
-    console.log("5. cookie been set!");
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "6. User logged in successful!",
+        message: "User logged in successful!",
         userData,
       }),
       {

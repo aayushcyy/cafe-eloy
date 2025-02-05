@@ -51,6 +51,19 @@ export default function page() {
       const data = await response.json();
       if (response.ok) {
         console.log("User signup successful: ", data);
+
+        // Set Cookie for the user
+        setCookie(
+          "user",
+          JSON.stringify({
+            name: name,
+            email: email,
+          })
+        );
+        console.log("cookie has been set!");
+
+        // Redirect user
+        setIsLoggedIn(true);
         router.push("/book");
       } else {
         console.error("Error signing up: ", data.message);
@@ -95,7 +108,6 @@ export default function page() {
           email: data.userData.email,
         })
       );
-
       console.log("cookie has been set!");
 
       // Redirect user

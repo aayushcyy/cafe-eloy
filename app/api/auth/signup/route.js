@@ -30,13 +30,13 @@ export async function POST(req) {
     // Get the Firebase ID token
     const token = await getIdToken(user);
 
-    //setting cookies
-    cookies().set("user", JSON.stringify({ name, email }), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 2,
-      path: "/",
-    });
+    // //setting cookies
+    // cookies().set("user", JSON.stringify({ name, email }), {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   maxAge: 60 * 2,
+    //   path: "/",
+    // });
 
     return new Response(
       JSON.stringify({ success: true, message: "User Signedup successful!" }),
