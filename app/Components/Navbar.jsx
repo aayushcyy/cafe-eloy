@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import useStore from "../store/store";
 
-export default function Navbar({ showBook = true }) {
+export default function Navbar({ showBook, showBook2 }) {
   //hover animation hooks
   const [animateHover, setAnimateHover] = useState(false);
   const [animateHover2, setAnimateHover2] = useState(false);
@@ -146,7 +146,7 @@ export default function Navbar({ showBook = true }) {
                   Sign up
                 </motion.div>
               </Link>
-            ) : (
+            ) : showBook2 ? (
               <Link href={"/book"}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -157,11 +157,15 @@ export default function Navbar({ showBook = true }) {
                   Book Now!
                 </motion.div>
               </Link>
+            ) : (
+              <div className="bg-transparent py-2.5 px-4 text-sm rounded-full text-[#E6E0E0] cursor-pointer">
+                Book Now!
+              </div>
             )}
             {userData && (
               <div>
                 <UserCircleIcon
-                  className="size-9 cursor-pointer stroke-1.5"
+                  className="size-9 cursor-pointer stroke-1.5 hover:text-red-600 transition-all ease-in-out duration-200"
                   onClick={() => setOpenProfile(!openProfile)}
                 />
               </div>

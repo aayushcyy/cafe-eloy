@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import dayjs from "dayjs";
 import BookingDiv from "../Components/BookingDiv";
 import Loader from "../Components/Loader";
+import Link from "next/link";
 
 export default function page() {
   //location and date value
@@ -42,12 +43,10 @@ export default function page() {
 
   //creating document Id
   const shortLocation = locationValue.includes("Samta") ? "samta" : "kota";
-
   const sDateValue =
     dateValue === "Today"
       ? dayjs().format("DMMMYY")
       : dateValue.replace(/\s/g, "");
-
   const temId = `${shortLocation}-${sDateValue}`;
   const documentId = temId.toLowerCase();
 
@@ -233,7 +232,13 @@ export default function page() {
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div key={timeSlot}>
-                      <BookingDiv slot={timeSlot} available={isAvailable} />
+                      <Link
+                        href={{
+                          pathname: "/book/new2",
+                        }}
+                      >
+                        <BookingDiv slot={timeSlot} available={isAvailable} />
+                      </Link>
                     </div>
                   ))
                 ) : (
