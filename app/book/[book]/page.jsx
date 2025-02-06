@@ -1,9 +1,15 @@
 import Navbar from "@/app/Components/Navbar";
 import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { cookies } from "next/headers";
 
-export default async function page({ params }) {
+export default async function page({ params, slot, branch, date }) {
   const slug = (await params).slug;
+
+  // fetching cookie data and seting user data
+  const cookieStore = await cookies();
+  const user = cookieStore.get("user");
+  const userData = JSON.parse(user.value);
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
@@ -17,8 +23,8 @@ export default async function page({ params }) {
                 Booking Summary
               </p>
               <p className="text-orange-700 italic">1028F25</p>
-              <p>Name: Aayush Chaudhary</p>
-              <p>Email: aayupcy@gmail.com</p>
+              <p>Name: {userData.name}</p>
+              <p>Email: {userData.email}</p>
               <p>Date: 28 Feb 2025</p>
               <div className="flex items-start gap-1">
                 <p>Branch: </p>

@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import BookingDiv from "../Components/BookingDiv";
 import Loader from "../Components/Loader";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   //location and date value
@@ -20,8 +21,10 @@ export default function page() {
   const [afterTommDate, setAfterTommDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [slotsData, setSlotsData] = useState(null);
+  const [uniquePathId, setUniquePathId] = useState("");
   const locationDivRef = useRef(null);
   const dateDivRef = useRef(null);
+  const router = useRouter();
 
   //generating upcoming 2 days
   useEffect(() => {
@@ -109,6 +112,16 @@ export default function page() {
       setLoading(false);
     }
   };
+
+  //creating uniqueId
+  useEffect(() => {
+    console.log("dateval: ", dateValue, " location val: ", locationValue);
+    if (dateValue === "Today") {
+      const month = dayjs().format("MM");
+      const date = dayjs().format("DD");
+      setUniquePathId(month.concat(date));
+    }
+  }, [dateValue, locationValue]);
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
@@ -231,14 +244,17 @@ export default function page() {
               <div className="flex flex-col gap-[10px]">
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
-                    <div key={timeSlot}>
-                      <Link
-                        href={{
-                          pathname: "/book/new2",
-                        }}
-                      >
-                        <BookingDiv slot={timeSlot} available={isAvailable} />
-                      </Link>
+                    <div
+                      key={timeSlot}
+                      onClick={() =>
+                        isAvailable
+                          ? router.push(
+                              `/book/${uniquePathId}${timeSlot.slice(0, 2)}`
+                            )
+                          : null
+                      }
+                    >
+                      <BookingDiv slot={timeSlot} available={isAvailable} />
                     </div>
                   ))
                 ) : (
