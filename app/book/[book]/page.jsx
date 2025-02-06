@@ -3,8 +3,10 @@ import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { cookies } from "next/headers";
 
-export default async function page({ params, slot, branch, date }) {
-  const slug = (await params).slug;
+export default async function page({ searchParams }) {
+  const slot = searchParams.slot;
+  const date = searchParams.date;
+  const location = searchParams.location;
 
   // fetching cookie data and seting user data
   const cookieStore = await cookies();
@@ -25,15 +27,18 @@ export default async function page({ params, slot, branch, date }) {
               <p className="text-orange-700 italic">1028F25</p>
               <p>Name: {userData.name}</p>
               <p>Email: {userData.email}</p>
-              <p>Date: 28 Feb 2025</p>
+              <p>Date: {date}</p>
               <div className="flex items-start gap-1">
                 <p>Branch: </p>
-                <p className="w-[70%]">Kota, Raipur</p>
+                <p className="w-[70%]">
+                  {location.includes("Samta")
+                    ? "Samta Colony, Raipur"
+                    : "Kota Chowk, Raipur"}
+                </p>
               </div>
               <div className="flex items-center justify-between">
                 <p>
-                  Slot: 10AM - 11AM{" "}
-                  <span className="text-[#7d7d7d]">(1Hr)</span>
+                  Slot: {slot} <span className="text-[#7d7d7d]">(1Hr)</span>
                 </p>{" "}
                 <p className="text-sm">Rs.200</p>
               </div>

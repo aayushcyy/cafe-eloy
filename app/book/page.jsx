@@ -123,6 +123,21 @@ export default function page() {
     }
   }, [dateValue, locationValue]);
 
+  const handleSlotClick = (isAvailable, timeSlot) => {
+    const dataToPass = {
+      slot: timeSlot,
+      date: dateValue,
+      location: locationValue,
+    };
+    const queryString = new URLSearchParams(dataToPass).toString();
+
+    if (isAvailable) {
+      router.push(
+        `/book/${uniquePathId}${timeSlot.slice(0, 2)}?${queryString}`
+      );
+    }
+  };
+
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} />
@@ -246,13 +261,7 @@ export default function page() {
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
                       key={timeSlot}
-                      onClick={() =>
-                        isAvailable
-                          ? router.push(
-                              `/book/${uniquePathId}${timeSlot.slice(0, 2)}`
-                            )
-                          : null
-                      }
+                      onClick={() => handleSlotClick(isAvailable, timeSlot)}
                     >
                       <BookingDiv slot={timeSlot} available={isAvailable} />
                     </div>
