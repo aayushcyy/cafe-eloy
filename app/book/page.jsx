@@ -40,18 +40,18 @@ export default function page() {
     };
   }, []);
 
+  //creating document Id
+  const shortLocation = locationValue.includes("Samta") ? "samta" : "kota";
+
+  const sDateValue =
+    dateValue === "Today"
+      ? dayjs().format("DMMMYY")
+      : dateValue.replace(/\s/g, "");
+
+  const temId = `${shortLocation}-${sDateValue}`;
+  const documentId = temId.toLowerCase();
+
   useEffect(() => {
-    //creating document Id
-    const shortLocation = locationValue.includes("Samta") ? "samta" : "kota";
-
-    const sDateValue =
-      dateValue === "Today"
-        ? dayjs().format("DMMMYY")
-        : dateValue.replace(/\s/g, "");
-
-    const temId = `${shortLocation}-${sDateValue}`;
-    const documentId = temId.toLowerCase();
-
     const checkDocExistence = async () => {
       if (!locationValue || !dateValue) {
         console.log("Please fill all fields correctly");
@@ -66,18 +66,50 @@ export default function page() {
           },
           body: JSON.stringify({ documentId }),
         });
-
+        //empty the slots before filling in with new value
+        setSlotsData(null);
         const data = await response.json();
-        setSlotsData(data.data.slots);
-        console.log("my data babu: ", data.data.slots);
+        if (data.data.slots) {
+          setSlotsData(data.data.slots);
+        }
       } catch (error) {
         console.error("Error signing up: ", error);
+        console.log("slots empty tha");
+        //creating slots when slot wasn't available
+        createSlots();
+        console.log("called the createSlots functino");
       } finally {
         setLoading(false);
       }
     };
     checkDocExistence();
   }, [dateValue, locationValue]);
+
+  //creating slots when it wasn't available
+  const createSlots = async () => {
+    console.log("creatSlots function starttttt!");
+    setLoading(true);
+    try {
+      const response = await fetch("/api/database/createDoc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dateValue, locationValue, documentId }),
+      });
+      setSlotsData(null);
+      const data = await response.json();
+      if (data.data.slots) {
+        setSlotsData(data.data.slots);
+        console.log("the data i got from creating doc: ", data);
+        //setSlotsData(data.data.slots);
+      }
+    } catch (error) {
+      console.error("Error creating doc: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">

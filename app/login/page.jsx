@@ -22,7 +22,7 @@ export default function page() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showSignup, setShowSignup] = useState(true);
+  const [showSignup, setShowSignup] = useState(false);
   const [signupError, setSignupError] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [userData, setUserData] = useState(null);
