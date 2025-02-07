@@ -58,6 +58,9 @@ export default function page() {
           JSON.stringify({
             name: name,
             email: email,
+            slot: null,
+            location: null,
+            date: null,
           })
         );
         console.log("cookie has been set!");
@@ -106,6 +109,9 @@ export default function page() {
         JSON.stringify({
           name: data.userData.name,
           email: data.userData.email,
+          slot: null,
+          location: null,
+          date: null,
         })
       );
       console.log("cookie has been set!");

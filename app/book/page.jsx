@@ -7,8 +7,8 @@ import { motion } from "motion/react";
 import dayjs from "dayjs";
 import BookingDiv from "../Components/BookingDiv";
 import Loader from "../Components/Loader";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function page() {
   //location and date value
@@ -101,6 +101,8 @@ export default function page() {
       });
       setSlotsData(null);
       const data = await response.json();
+      console.log("data: ", data);
+
       if (data.data.slots) {
         setSlotsData(data.data.slots);
         console.log("the data i got from creating doc: ", data);
@@ -124,17 +126,26 @@ export default function page() {
   }, [dateValue, locationValue]);
 
   const handleSlotClick = (isAvailable, timeSlot) => {
-    const dataToPass = {
-      slot: timeSlot,
-      date: dateValue,
-      location: locationValue,
-    };
-    const queryString = new URLSearchParams(dataToPass).toString();
+    //setting cookies to get values in dynamic page
+    const userCookie = getCookie("user");
+    if (userCookie) {
+      try {
+        const userData = JSON.parse(userCookie);
+
+        userData.slot = timeSlot;
+        userData.location = locationValue;
+        userData.date = dateValue;
+
+        setCookie("user", JSON.stringify(userData));
+      } catch (error) {
+        console.error("Error parsing user cookie:", error);
+      }
+    } else {
+      console.warn("No existing user cookie found.");
+    }
 
     if (isAvailable) {
-      router.push(
-        `/book/${uniquePathId}${timeSlot.slice(0, 2)}?${queryString}`
-      );
+      router.push(`/book/${uniquePathId}${timeSlot.slice(0, 2)}`);
     }
   };
 

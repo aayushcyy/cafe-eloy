@@ -14,6 +14,7 @@ import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import useStore from "../store/store";
+import { useRouter } from "next/navigation";
 
 export default function Navbar({ showBook, showBook2 }) {
   //hover animation hooks
@@ -24,6 +25,7 @@ export default function Navbar({ showBook, showBook2 }) {
   const [openProfile, setOpenProfile] = useState(false);
   const [userData, setUserData] = useState(null);
   const profileDivRef = useRef(null);
+  const router = useRouter();
 
   //accessing zustand method
   const { isLoggedIn, setZustandUser } = useStore();
@@ -43,6 +45,7 @@ export default function Navbar({ showBook, showBook2 }) {
   const handleSignOut = () => {
     deleteCookie("user");
     setUserData(null);
+    router.push("/");
     window.location.reload();
   };
 

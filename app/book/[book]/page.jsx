@@ -2,16 +2,16 @@ import Navbar from "@/app/Components/Navbar";
 import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { cookies } from "next/headers";
+import dayjs from "dayjs";
 
-export default async function page({ searchParams }) {
-  const slot = searchParams.slot;
-  const date = searchParams.date;
-  const location = searchParams.location;
+export default async function page({ params }) {
+  const { book } = params;
 
   // fetching cookie data and seting user data
   const cookieStore = await cookies();
   const user = cookieStore.get("user");
   const userData = JSON.parse(user.value);
+  console.log("userData ->  ", userData);
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
@@ -24,21 +24,27 @@ export default async function page({ searchParams }) {
               <p className="uppercase text-sm font-normal text-orange-700 mb-4">
                 Booking Summary
               </p>
-              <p className="text-orange-700 italic">1028F25</p>
+              <p className="text-orange-700 italic">{book}</p>
               <p>Name: {userData.name}</p>
               <p>Email: {userData.email}</p>
-              <p>Date: {date}</p>
+              <p>
+                Date:{" "}
+                {userData.date === "Today"
+                  ? dayjs().format("D MMM YY")
+                  : userData.date}
+              </p>
               <div className="flex items-start gap-1">
                 <p>Branch: </p>
                 <p className="w-[70%]">
-                  {location.includes("Samta")
+                  {userData.location.includes("Samta")
                     ? "Samta Colony, Raipur"
                     : "Kota Chowk, Raipur"}
                 </p>
               </div>
               <div className="flex items-center justify-between">
                 <p>
-                  Slot: {slot} <span className="text-[#7d7d7d]">(1Hr)</span>
+                  Slot: {userData.slot}{" "}
+                  <span className="text-[#7d7d7d]">(1Hr)</span>
                 </p>{" "}
                 <p className="text-sm">Rs.200</p>
               </div>
