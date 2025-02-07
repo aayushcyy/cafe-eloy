@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { getIdToken } from "firebase/auth";
 import { cookies } from "next/headers";
+import dayjs from "dayjs";
 
 export async function POST(req) {
   try {
@@ -20,8 +21,25 @@ export async function POST(req) {
     );
     const user = userCrendentials.user;
 
+    //creating unique documentId
+    const hr = dayjs().format("H");
+    const min = dayjs().format("m");
+    const sec = dayjs().format("s");
+    const date = dayjs().format("DMMMYY");
+    const nameIdd =
+      name.length > 6
+        ? name.slice(0, 7).replace(/\s/g, "")
+        : name.replace(/\s/g, "");
+    const tempId = `${nameIdd}${hr}hr${min}min${sec}sec${date}`;
+    let documentId;
+    if (tempId.length % 2) {
+      documentId = tempId;
+    } else {
+      documentId = `A${tempId}`;
+    }
+
     //saving user data to firestore
-    await setDoc(doc(db, "users", user.uid), {
+    await setDoc(doc(db, "users", documentId), {
       name: name,
       email: email,
       createdAt: new Date(),
