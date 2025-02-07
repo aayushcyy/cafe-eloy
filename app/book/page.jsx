@@ -9,6 +9,7 @@ import BookingDiv from "../Components/BookingDiv";
 import Loader from "../Components/Loader";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
+import useMyStore from "../store/store";
 
 export default function page() {
   //location and date value
@@ -25,6 +26,9 @@ export default function page() {
   const locationDivRef = useRef(null);
   const dateDivRef = useRef(null);
   const router = useRouter();
+
+  //extracting zustand values
+  const { setDocumentId } = useMyStore();
 
   //generating upcoming 2 days
   useEffect(() => {
@@ -131,7 +135,6 @@ export default function page() {
     if (userCookie) {
       try {
         const userData = JSON.parse(userCookie);
-
         userData.slot = timeSlot;
         userData.location = locationValue;
         userData.date =

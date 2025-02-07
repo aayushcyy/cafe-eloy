@@ -1,10 +1,10 @@
+import { documentId } from "firebase/firestore";
 import { create } from "zustand";
 
 const useMyStore = create((set) => ({
-  userDetail: null,
-  setZustandUser: (userData) => set({ userDetail: userData }),
-  clearZustandUser: () => set({ user: null }),
-
+  // userDetail: null,
+  // setZustandUser: (userData) => set({ userDetail: userData }),
+  // clearZustandUser: () => set({ user: null }),
   isLoggedIn: false,
   setIsLoggedIn: (status) => set({ isLoggedIn: status }),
 }));

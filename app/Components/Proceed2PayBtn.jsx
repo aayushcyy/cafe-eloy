@@ -1,16 +1,63 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
+import { getCookie } from "cookies-next";
 
 export default function Proceed2PayBtn() {
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [date, setDate] = useState(null);
+  const [slot, setSlot] = useState(null);
+  const [newVal, setNewVal] = useState(false);
+  // const [documentId, setDocumentId] = useState(null);
+
+  //geting data from cookie
+  useEffect(() => {
+    const userCookie = getCookie("user");
+    if (userCookie) {
+      const userData = JSON.parse(userCookie);
+      setSlot(userData.slot);
+      setLocation(userData.location.includes("Samta") ? "samta" : "kota");
+      setDate(userData.date.replace(/\s/g, "").toLowerCase());
+    } else {
+      console.log("can't get cookie!");
+    }
+  }, []);
+
+  //creating document id to access/change data
 
   const handleSubmit = async () => {
     setLoading(true);
+    //creating document id
+    const documentId = `${location}-${date}`;
+
+    if (!slot || !documentId || !newVal) {
+      console.error("Missing required fields at client side:", {
+        slot,
+        documentId,
+        newVal,
+      });
+      return;
+    }
     try {
+      const response = await fetch("../api/database/updateDoc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          slot: slot,
+          newVal: newVal,
+          documentId: documentId,
+        }),
+      });
+      const data = await response.json();
+      console.log("data after trying updateDoc: ", data);
     } catch (error) {
+      console.error("Error updating doc: ", error);
     } finally {
+      setLoading(false);
     }
   };
 

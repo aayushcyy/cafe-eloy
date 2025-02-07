@@ -13,7 +13,7 @@ import {
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
-import useStore from "../store/store";
+import useMyStore from "../store/store";
 import { useRouter } from "next/navigation";
 
 export default function Navbar({ showBook, showBook2 }) {
@@ -28,7 +28,7 @@ export default function Navbar({ showBook, showBook2 }) {
   const router = useRouter();
 
   //accessing zustand method
-  const { isLoggedIn, setZustandUser } = useStore();
+  const { isLoggedIn } = useMyStore();
 
   const pathName = usePathname();
 
@@ -37,7 +37,7 @@ export default function Navbar({ showBook, showBook2 }) {
     const user = getCookie("user");
     if (user) {
       setUserData(JSON.parse(user));
-      setZustandUser(JSON.parse(user));
+      //setZustandUser(JSON.parse(user));
     }
   }, [isLoggedIn]);
 
