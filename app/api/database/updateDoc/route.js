@@ -6,7 +6,7 @@ export async function POST(req) {
     const body = await req.json();
     const { slot, newVal, documentId } = body;
 
-    if (!slot || !documentId || !newVal) {
+    if (!slot || !documentId || newVal === null || newVal === undefined) {
       return new Response(
         JSON.stringify({
           message: "Missing fields",

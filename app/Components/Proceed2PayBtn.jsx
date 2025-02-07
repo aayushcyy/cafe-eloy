@@ -35,7 +35,7 @@ export default function Proceed2PayBtn() {
   const handleSubmit = async () => {
     setLoading(true);
 
-    if (!slot || !documentId || !newVal) {
+    if (!slot || !documentId || newVal === null || newVal === undefined) {
       console.error("Missing required fields at client side:", {
         slot,
         documentId,
