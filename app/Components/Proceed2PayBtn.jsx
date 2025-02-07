@@ -10,7 +10,7 @@ export default function Proceed2PayBtn() {
   const [date, setDate] = useState(null);
   const [slot, setSlot] = useState(null);
   const [newVal, setNewVal] = useState(false);
-  // const [documentId, setDocumentId] = useState(null);
+  const [documentId, setDocumentId] = useState(null);
 
   //geting data from cookie
   useEffect(() => {
@@ -18,8 +18,13 @@ export default function Proceed2PayBtn() {
     if (userCookie) {
       const userData = JSON.parse(userCookie);
       setSlot(userData.slot);
-      setLocation(userData.location.includes("Samta") ? "samta" : "kota");
-      setDate(userData.date.replace(/\s/g, "").toLowerCase());
+      const loc = userData.location.includes("Samta") ? "samta" : "kota";
+      const formattedDate = userData.date.replace(/\s/g, "").toLowerCase();
+      setLocation(loc);
+      setDate(formattedDate);
+
+      // Generate document ID once location and date are available
+      setDocumentId(`${loc}-${formattedDate}`);
     } else {
       console.log("can't get cookie!");
     }
@@ -29,8 +34,6 @@ export default function Proceed2PayBtn() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    //creating document id
-    const documentId = `${location}-${date}`;
 
     if (!slot || !documentId || !newVal) {
       console.error("Missing required fields at client side:", {
