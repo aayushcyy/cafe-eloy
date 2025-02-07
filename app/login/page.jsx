@@ -61,6 +61,7 @@ export default function page() {
             slot: null,
             location: null,
             date: null,
+            bookingId: null,
           })
         );
         console.log("cookie has been set!");

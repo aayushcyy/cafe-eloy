@@ -134,7 +134,8 @@ export default function page() {
 
         userData.slot = timeSlot;
         userData.location = locationValue;
-        userData.date = dateValue;
+        userData.date =
+          dateValue === "Today" ? dayjs().format("D MMM YY") : dateValue;
 
         setCookie("user", JSON.stringify(userData));
       } catch (error) {

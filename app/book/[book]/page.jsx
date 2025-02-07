@@ -3,6 +3,7 @@ import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { cookies } from "next/headers";
 import dayjs from "dayjs";
+import Proceed2PayBtn from "@/app/Components/Proceed2PayBtn";
 
 export default async function page({ params }) {
   const { book } = params;
@@ -11,6 +12,7 @@ export default async function page({ params }) {
   const cookieStore = await cookies();
   const user = cookieStore.get("user");
   const userData = JSON.parse(user.value);
+  userData.bookingId = book;
   console.log("userData ->  ", userData);
 
   return (
@@ -27,12 +29,7 @@ export default async function page({ params }) {
               <p className="text-orange-700 italic">{book}</p>
               <p>Name: {userData.name}</p>
               <p>Email: {userData.email}</p>
-              <p>
-                Date:{" "}
-                {userData.date === "Today"
-                  ? dayjs().format("D MMM YY")
-                  : userData.date}
-              </p>
+              <p>Date: {userData.date}</p>
               <div className="flex items-start gap-1">
                 <p>Branch: </p>
                 <p className="w-[70%]">
@@ -76,9 +73,7 @@ export default async function page({ params }) {
             </p>
           </div>
           {/* Proceed button */}
-          <div className="w-[60%] text-center font-medium cursor-pointer bg-red-500 hover:bg-[#dc3636] text-white py-2 rounded-md">
-            Proceed to Payment
-          </div>
+          <Proceed2PayBtn />
         </div>
       </div>
     </div>
