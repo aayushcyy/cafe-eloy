@@ -44,11 +44,11 @@ export async function POST(req) {
       email: email,
       createdAt: new Date(),
       booking: [
-        {
-          branch: null,
-          date: null,
-          slot: null,
-        },
+        // {
+        //   branch: null,
+        //   date: null,
+        //   slot: null,
+        // },
       ],
     });
 

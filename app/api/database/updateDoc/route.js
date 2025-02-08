@@ -1,5 +1,13 @@
 import { db } from "@/firebase/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  collection,
+  arrayUnion,
+} from "firebase/firestore";
 
 export async function POST(req) {
   try {
@@ -26,14 +34,28 @@ export async function POST(req) {
     });
 
     //1. getting documents refference for users doc
-    ///yahase
-
-    //updating users doc
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", newVal.email)
+    );
+    const querySnapshot = await getDocs(q);
+    //2. updating users doc
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      await updateDoc(doc.ref, { bookings: arrayUnion(newVal.bookingDetail) });
+      console.log("user doc updated successful!");
+    } else if (querySnapshot.size === 0) {
+      console.log("No document found matching the criteria.");
+    } else {
+      console.log(
+        "Multiple documents found matching the criteria. Update logic needs to be adjusted."
+      );
+    }
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Document Updated successful!",
+        message: "Availabiliy and Users document Updated successful!",
       }),
       {
         status: 200,

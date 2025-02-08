@@ -9,6 +9,7 @@ export default function Proceed2PayBtn() {
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState(null);
   const [slot, setSlot] = useState(null);
+  const [email, setEmail] = useState(null);
   // const [newVal, setNewVal] = useState(false);
   const [documentId, setDocumentId] = useState(null);
 
@@ -18,6 +19,7 @@ export default function Proceed2PayBtn() {
     if (userCookie) {
       const userData = JSON.parse(userCookie);
       setSlot(userData.slot);
+      setEmail(userData.email);
       const loc = userData.location.includes("Samta") ? "samta" : "kota";
       const formattedDate = userData.date.replace(/\s/g, "").toLowerCase();
       setLocation(loc);
@@ -30,29 +32,34 @@ export default function Proceed2PayBtn() {
     }
   }, []);
 
-  //setting newVal to pass
-  const newVal = {
-    available: false,
-    bookingDetail: {
-      date: date,
-      branch: location,
-      slot: slot,
-    },
-  };
-
   //creating document id to access/change data
   const handleSubmit = async () => {
     setLoading(true);
 
-    if (!documentId || newVal === null || newVal === undefined) {
+    if (!documentId || !slot || !email || !date || !location) {
       console.error("Missing required fields at client side:", {
         slot,
         documentId,
-        newVal,
+        email,
+        date,
+        location,
       });
+      setLoading(false);
       return;
     }
+
     try {
+      const newVal = {
+        available: false,
+        email: email,
+        bookingDetail: {
+          date: date,
+          branch: location,
+          slot: slot,
+        },
+      };
+      console.log("new val ", newVal);
+
       const response = await fetch("../api/database/updateDoc", {
         method: "POST",
         headers: {
