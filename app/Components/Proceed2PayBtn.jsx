@@ -3,13 +3,15 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { getCookie } from "cookies-next";
+import dayjs from "dayjs";
 
-export default function Proceed2PayBtn(bookingId) {
+export default function Proceed2PayBtn({ bookingId }) {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState(null);
   const [slot, setSlot] = useState(null);
   const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
   // const [newVal, setNewVal] = useState(false);
   const [documentId, setDocumentId] = useState(null);
 
@@ -20,6 +22,7 @@ export default function Proceed2PayBtn(bookingId) {
       const userData = JSON.parse(userCookie);
       setSlot(userData.slot);
       setEmail(userData.email);
+      setName(userData.name);
       const loc = userData.location.includes("Samta") ? "samta" : "kota";
       const formattedDate = userData.date.replace(/\s/g, "").toLowerCase();
       setLocation(loc);
@@ -48,15 +51,29 @@ export default function Proceed2PayBtn(bookingId) {
       return;
     }
 
+    //creating documentId for bookings collection
+    const todayDate = dayjs().format("DMMMYY");
+    const bookingsDocIdRough = `${todayDate}${bookingId}`;
+    let bookingsDocId;
+    if (!bookingsDocIdRough.length % 2) {
+      bookingsDocId = `${todayDate}$D{bookingId}`;
+    } else {
+      bookingsDocId = bookingsDocIdRough;
+    }
+
     try {
       const newVal = {
         available: false,
         email: email,
+        bookingsDocId: bookingsDocId,
+        bookedOn: todayDate,
+        name: name,
         bookingDetail: {
           date: date,
           branch: location,
           slot: slot,
           bookingId: bookingId,
+          amountPaid: "Rs.213",
         },
       };
       console.log("new val ", newVal);

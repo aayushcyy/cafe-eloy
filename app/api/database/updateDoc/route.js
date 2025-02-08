@@ -5,6 +5,7 @@ import {
   query,
   where,
   getDocs,
+  setDoc,
   collection,
   arrayUnion,
 } from "firebase/firestore";
@@ -25,6 +26,8 @@ export async function POST(req) {
         }
       );
     }
+
+    //AVAILABILITY COLLECTION
     //1. getting documents refference for availability doc
     const docRef = doc(db, "availability", documentId);
 
@@ -33,6 +36,7 @@ export async function POST(req) {
       [`slots.${newVal.bookingDetail.slot}`]: newVal.available,
     });
 
+    //USERS COLLECTION
     //1. getting documents refference for users doc
     const q = query(
       collection(db, "users"),
@@ -51,6 +55,20 @@ export async function POST(req) {
         "Multiple documents found matching the criteria. Update logic needs to be adjusted."
       );
     }
+
+    //BOOKINGS COLLECTION
+    await setDoc(doc(db, "bookings", newVal.bookingsDocId), {
+      name: newVal.name,
+      email: newVal.email,
+      bookingId: newVal.bookingDetail.bookingId,
+      branch: newVal.bookingDetail.branch.includes("samta")
+        ? "Samta Colony, Raipur"
+        : "Kota Chowk, Raipur",
+      date: newVal.bookingDetail.date,
+      slot: newVal.bookingDetail.slot,
+      bookedOn: newVal.bookedOn,
+      amountPaid: newVal.bookingDetail.amountPaid,
+    });
 
     return new Response(
       JSON.stringify({
