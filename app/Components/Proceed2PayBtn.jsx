@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { getCookie } from "cookies-next";
 
-export default function Proceed2PayBtn() {
+export default function Proceed2PayBtn(bookingId) {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState(null);
@@ -56,6 +56,7 @@ export default function Proceed2PayBtn() {
           date: date,
           branch: location,
           slot: slot,
+          bookingId: bookingId,
         },
       };
       console.log("new val ", newVal);

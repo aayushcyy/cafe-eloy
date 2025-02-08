@@ -73,7 +73,7 @@ export default async function page({ params }) {
             </p>
           </div>
           {/* Proceed button */}
-          <Proceed2PayBtn />
+          <Proceed2PayBtn bookingId={book} />
         </div>
       </div>
     </div>
