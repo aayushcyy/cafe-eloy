@@ -4,9 +4,9 @@ import { doc, updateDoc } from "firebase/firestore";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { slot, newVal, documentId } = body;
+    const { newVal, documentId } = body;
 
-    if (!slot || !documentId || newVal === null || newVal === undefined) {
+    if (!documentId || !newVal) {
       return new Response(
         JSON.stringify({
           message: "Missing fields",
@@ -17,13 +17,18 @@ export async function POST(req) {
         }
       );
     }
-    //getting documents refference
+    //1. getting documents refference for availability doc
     const docRef = doc(db, "availability", documentId);
 
-    //updating doc
+    //2. updating availability doc
     await updateDoc(docRef, {
-      [`slots.${slot}`]: newVal,
+      [`slots.${newVal.bookingDetail.slot}`]: newVal.available,
     });
+
+    //1. getting documents refference for users doc
+    ///yahase
+
+    //updating users doc
 
     return new Response(
       JSON.stringify({

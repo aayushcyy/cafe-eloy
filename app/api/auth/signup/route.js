@@ -43,6 +43,13 @@ export async function POST(req) {
       name: name,
       email: email,
       createdAt: new Date(),
+      booking: [
+        {
+          branch: null,
+          date: null,
+          slot: null,
+        },
+      ],
     });
 
     // Get the Firebase ID token

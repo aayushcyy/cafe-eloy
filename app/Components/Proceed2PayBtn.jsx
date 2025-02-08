@@ -9,7 +9,7 @@ export default function Proceed2PayBtn() {
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState(null);
   const [slot, setSlot] = useState(null);
-  const [newVal, setNewVal] = useState(false);
+  // const [newVal, setNewVal] = useState(false);
   const [documentId, setDocumentId] = useState(null);
 
   //geting data from cookie
@@ -30,12 +30,21 @@ export default function Proceed2PayBtn() {
     }
   }, []);
 
-  //creating document id to access/change data
+  //setting newVal to pass
+  const newVal = {
+    available: false,
+    bookingDetail: {
+      date: date,
+      branch: location,
+      slot: slot,
+    },
+  };
 
+  //creating document id to access/change data
   const handleSubmit = async () => {
     setLoading(true);
 
-    if (!slot || !documentId || newVal === null || newVal === undefined) {
+    if (!documentId || newVal === null || newVal === undefined) {
       console.error("Missing required fields at client side:", {
         slot,
         documentId,
@@ -50,7 +59,6 @@ export default function Proceed2PayBtn() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          slot: slot,
           newVal: newVal,
           documentId: documentId,
         }),
