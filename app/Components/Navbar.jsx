@@ -228,52 +228,199 @@ export default function Navbar({ showBook, showBook2 }) {
                     </p>
                   </div>
                 </div>
-                {/* Upcoming Bookings */}
-                <div className="flex flex-col gap-1 rounded-md">
-                  <p>Upcoming bookings</p>
-                  <div className="flex flex-col gap-2 bg-[#247332] px-2 py-2 rounded-md">
-                    <div className="flex justify-between px-3 py-1 text-sm rounded-md bg-white">
-                      <div className="">
-                        <p>Date: 3 Feb 25</p>
-                        <p>Branch: Samta Colony, Raipur</p>
+                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll">
+                  {/* Upcoming Bookings */}
+                  <div className="flex flex-col gap-3 rounded-md">
+                    <p>Upcoming bookings</p>
+                    <div className="flex flex-col gap-3 rounded-md">
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative">
+                        <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
-                      <div>
-                        <p>Slot: 3PM - 4PM</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between text-sm px-3 py-1 rounded-md bg-white">
-                      <div>
-                        <p>Date: 3 Feb 25</p>
-                        <p>Branch: Samta Colony, Raipur</p>
-                      </div>
-                      <div>
-                        <p>Slot: 3PM - 4PM</p>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                {/* Booking History Section */}
-                <div className="flex flex-col gap-1">
-                  <p>Booking History</p>
-                  <div className="flex flex-col gap-2 bg-[#a5a5a5] px-2 py-2 text-sm rounded-md">
-                    <div className="flex justify-between px-3 py-1 rounded-md bg-white">
-                      <div>
-                        <p>Date: 22 Jan 25</p>
-                        <p>Branch: Samta Colony, Raipur</p>
+                  <div className="w-full h-[1px] bg-[#7a7a7a63] mt-1"></div>
+                  {/* Booking History Section */}
+                  <div className="flex flex-col gap-3">
+                    <p>Booking History</p>
+                    <div className="flex flex-col gap-3 text-sm rounded-md">
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
-                      <div>
-                        <p>Slot: 2PM - 3PM</p>
-                        <p>Paid: Rs.200</p>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex justify-between px-3 py-1 rounded-md bg-white">
-                      <div>
-                        <p>Date: 3 Feb 25</p>
-                        <p>Branch: Jagganath Chowk, Kota</p>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
-                      <div>
-                        <p>Slot: 3PM - 4PM</p>
-                        <p>Paid: Rs.200</p>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
+                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
+                          ABC123
+                        </p>
+                        <div className="">
+                          <p>Date: 3 Feb 25</p>
+                          <p>Branch: Samta Colony, Raipur</p>
+                        </div>
+                        <div>
+                          <p>Slot: 3PM - 4PM</p>
+                          <p>Paid: Rs.200</p>
+                        </div>
                       </div>
                     </div>
                   </div>
