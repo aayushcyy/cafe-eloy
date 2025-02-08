@@ -228,7 +228,7 @@ export default function Navbar({ showBook, showBook2 }) {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll">
+                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll pr-1">
                   {/* Upcoming Bookings */}
                   <div className="flex flex-col gap-3 rounded-md">
                     <p>Upcoming bookings</p>

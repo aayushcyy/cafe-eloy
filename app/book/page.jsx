@@ -266,12 +266,12 @@ export default function page() {
         </div>
         {/* showing booking options */}
         <div className="w-[40%] flex flex-col">
-          <div className="w-[85%] flex flex-col gap-2">
+          <div className="w-[90%] flex flex-col gap-2">
             <p className="text-sm text-gray-400">Available Slots</p>
             {loading ? (
               <Loader height={80} width={80} />
             ) : (
-              <div className="flex flex-col gap-[10px]">
+              <div className="flex flex-col gap-[10px] h-[85vh] pr-5 overflow-y-scroll">
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
