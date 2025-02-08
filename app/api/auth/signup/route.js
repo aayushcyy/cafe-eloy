@@ -8,7 +8,8 @@ import dayjs from "dayjs";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { name, email, password } = body;
+    const { name, email, password, randomAvatar } = body;
+    //validating all the data
     if (!name || !email || !password) {
       return new Response(JSON.stringify({ message: "Missing fields" }), {
         status: 400,
@@ -26,18 +27,11 @@ export async function POST(req) {
       name: name,
       email: email,
       createdAt: new Date(),
+      avatarValue: randomAvatar,
     });
 
     // Get the Firebase ID token
     const token = await getIdToken(user);
-
-    // //setting cookies
-    // cookies().set("user", JSON.stringify({ name, email }), {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   maxAge: 60 * 2,
-    //   path: "/",
-    // });
 
     return new Response(
       JSON.stringify({ success: true, message: "User Signedup successful!" }),

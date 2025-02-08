@@ -27,6 +27,20 @@ export default function Navbar({ showBook, showBook2 }) {
   const profileDivRef = useRef(null);
   const router = useRouter();
 
+  //avatars access
+  const avatars = [
+    "/avatars/avatar1.png",
+    "/avatars/avatar2.png",
+    "/avatars/avatar3.png",
+    "/avatars/avatar4.png",
+    "/avatars/avatar5.png",
+    "/avatars/avatar6.png",
+    "/avatars/avatar7.png",
+    "/avatars/avatar8.png",
+    "/avatars/avatar9.png",
+    "/avatars/avatar10.png",
+  ];
+
   //accessing zustand method
   const { isLoggedIn } = useMyStore();
 
@@ -197,8 +211,13 @@ export default function Navbar({ showBook, showBook2 }) {
               <div className="flex flex-col gap-5">
                 {/* User Details */}
                 <div className="flex gap-4 py-2">
-                  <div className="w-14 h-14 flex items-center justify-center text-xl bg-red-400 rounded-[100%]">
-                    AC
+                  <div className="w-14 h-14 flex items-center justify-center text-xl bg-red-400 rounded-[100%] relative">
+                    <Image
+                      src={avatars[userData.randomAvatar]}
+                      height={100}
+                      width={100}
+                      alt="profile img"
+                    />
                   </div>
                   <div className="flex flex-col">
                     <p className="text-2xl">

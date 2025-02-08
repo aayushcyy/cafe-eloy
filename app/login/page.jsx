@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import Loader from "../Components/Loader";
 import useMyStore from "../store/store";
-import { getCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 
 export default function page() {
   const [name, setName] = useState("");
@@ -39,13 +39,17 @@ export default function page() {
       return;
     }
     setLoading(true);
+
+    //setting value for avatar
+    const randomAvatar = Math.floor(Math.random() * 10);
+
     try {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, randomAvatar }),
       });
 
       const data = await response.json();
@@ -62,6 +66,7 @@ export default function page() {
             location: null,
             date: null,
             bookingId: null,
+            randomAvatar: randomAvatar,
           })
         );
         console.log("cookie has been set!");
@@ -113,6 +118,7 @@ export default function page() {
           slot: null,
           location: null,
           date: null,
+          randomAvatar: data.userData.avatarValue,
         })
       );
       console.log("cookie has been set!");
