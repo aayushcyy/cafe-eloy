@@ -43,7 +43,6 @@ export default function Navbar({ showBook, showBook2 }) {
 
   //accessing zustand method
   const { isLoggedIn } = useMyStore();
-
   const pathName = usePathname();
 
   // fetching cookie data and seting user data
@@ -228,7 +227,7 @@ export default function Navbar({ showBook, showBook2 }) {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll pr-1">
+                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll">
                   {/* Upcoming Bookings */}
                   <div className="flex flex-col gap-3 rounded-md">
                     <p>Upcoming bookings</p>

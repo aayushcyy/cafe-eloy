@@ -6,12 +6,12 @@ export async function POST(req) {
     const body = await req.json();
     const { documentId } = body;
 
-    if (!documentId) {
-      return new Response(JSON.stringify({ message: "Missing fields" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+    // if (!documentId) {
+    //   return new Response(JSON.stringify({ message: "Missing fields" }), {
+    //     status: 400,
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    // }
 
     const docRef = doc(db, "availability", documentId);
     const docSnap = await getDoc(docRef);
