@@ -67,6 +67,7 @@ export default function page() {
             date: null,
             bookingId: null,
             randomAvatar: randomAvatar,
+            userBookings: data.userData.bookings,
           })
         );
         console.log("cookie has been set!");
@@ -119,6 +120,7 @@ export default function page() {
           location: null,
           date: null,
           randomAvatar: data.userData.avatarValue,
+          userBookings: data.userData.bookings,
         })
       );
       console.log("cookie has been set!");
