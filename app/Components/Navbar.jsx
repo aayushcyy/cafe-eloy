@@ -25,6 +25,8 @@ export default function Navbar({ showBook, showBook2 }) {
   const [animateHover4, setAnimateHover4] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [upcomingBooking, setUpcomingBooking] = useState([]);
+  const [prevBooking, setPrevBooking] = useState([]);
   const profileDivRef = useRef(null);
   const router = useRouter();
 
@@ -78,9 +80,56 @@ export default function Navbar({ showBook, showBook2 }) {
   console.log("the user data is : ", userData);
 
   //calculating current time and date to distribute the slots
-  const date = dayjs().format("D MMM YY");
-  const time = dayjs().format("hA");
-  console.log(date, time);
+  const upcoming = [];
+  const previous = [];
+  useEffect(() => {
+    const filterBookings = async () => {
+      if (!userData) {
+        console.log("User data hasn't been found!");
+        return;
+      }
+
+      console.log("User data in filter: ", userData);
+
+      const dateAaj = dayjs().format("D MMM YY");
+      const timeAbhi = dayjs().format("hA");
+
+      const combined = `${dateAaj} ${timeAbhi}`; // Combine the strings
+      const currDate = dayjs(combined, "D MMM YY hA");
+
+      console.log("current time:", currDate);
+
+      userData.userBookings.forEach((booking) => {
+        const bookingDate = dayjs(
+          `${booking.date.replace(/(\d{2})(\w{3})(\d{2})/, "$1 $2 $3")}, ${
+            booking.slot.split(" - ")[0]
+          }`,
+          "D MMM YY hA"
+        );
+
+        if (currDate.isBefore(bookingDate)) {
+          upcoming.push(booking);
+        } else {
+          previous.push(booking);
+        }
+      });
+
+      // ✅ Update state once after processing
+      setUpcomingBooking(upcoming);
+      setPrevBooking(previous);
+    };
+
+    filterBookings(); // Call the async function
+  }, [userData]); // Runs only when userData updates
+
+  // ✅ Log the state AFTER it updates
+  useEffect(() => {
+    console.log("Updated upcoming bookings: ", upcomingBooking);
+  }, [upcomingBooking]);
+
+  useEffect(() => {
+    console.log("Updated previous bookings: ", prevBooking);
+  }, [prevBooking]);
 
   return (
     <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B]">
@@ -239,8 +288,8 @@ export default function Navbar({ showBook, showBook2 }) {
                   <div className="flex flex-col gap-3 rounded-md">
                     <p>Upcoming bookings</p>
                     <div className="flex flex-col gap-3 rounded-md">
-                      {userData.userBookings ? (
-                        userData.userBookings.map((booking) => (
+                      {upcoming ? (
+                        upcoming.map((booking) => (
                           <div
                             className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
                             key={booking.bookingId}
@@ -296,162 +345,43 @@ export default function Navbar({ showBook, showBook2 }) {
                   <div className="flex flex-col gap-3">
                     <p>Booking History</p>
                     <div className="flex flex-col gap-3 text-sm rounded-md">
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
+                      {previous.length < 1 ? (
+                        previous.map((booking) => (
+                          <div
+                            className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
+                            key={booking.bookingId}
+                          >
+                            <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
+                              {booking.bookingId}
+                            </p>
+                            <div className="">
+                              <p className="capitalize">
+                                Date:{" "}
+                                <span className="capitalize">
+                                  {booking.date.replace(
+                                    /(\d{2})(\w{3})(\d{2})/,
+                                    "$1 $2 $3"
+                                  )}
+                                </span>
+                              </p>
+                              <p>
+                                Branch:{" "}
+                                {booking.branch.includes("samta")
+                                  ? "Samta Colony, Raipur"
+                                  : "Kota Chowk, Raipur"}
+                              </p>
+                            </div>
+                            <div>
+                              <p>Slot: {booking.slot}</p>
+                              <p>Paid: {booking.amountPaid}</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-xs text-black">
+                          Your don't have any booking yet!
                         </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
