@@ -347,19 +347,6 @@ export default function Navbar({ showBook, showBook2 }) {
                           Your don't have any booking yet!
                         </p>
                       )}
-                      {/* <div className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative">
-                        <p className="text-orange-700 text-xs font-medium rounded-sm bg-white absolute italic -top-[8px] px-1">
-                          ABC123
-                        </p>
-                        <div className="">
-                          <p>Date: 3 Feb 25</p>
-                          <p>Branch: Samta Colony, Raipur</p>
-                        </div>
-                        <div>
-                          <p>Slot: 3PM - 4PM</p>
-                          <p>Paid: Rs.200</p>
-                        </div>
-                      </div> */}
                     </div>
                   </div>
                   <div className="w-full h-[1px] bg-[#7a7a7a63] mt-1"></div>
@@ -370,7 +357,7 @@ export default function Navbar({ showBook, showBook2 }) {
                       {prevBooking.length > 0 ? (
                         prevBooking.map((booking) => (
                           <div
-                            className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
+                            className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative"
                             key={booking.bookingId}
                           >
                             <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
