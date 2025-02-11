@@ -258,9 +258,18 @@ export default function Navbar({ showBook, showBook2 }) {
             )}
             {userData && (
               <div>
-                <UserCircleIcon
+                {/* <UserCircleIcon
                   className="size-9 cursor-pointer stroke-1.5 hover:text-red-600 transition-all ease-in-out duration-200"
+                  
+                /> */}
+
+                <Image
+                  src={avatars[userData.randomAvatar]}
+                  width={100}
+                  height={100}
+                  alt="profile"
                   onClick={() => setOpenProfile(!openProfile)}
+                  className="w-10 rounded-full bg-transparent cursor-pointer"
                 />
               </div>
             )}
@@ -272,10 +281,10 @@ export default function Navbar({ showBook, showBook2 }) {
         <div className="bg-[#908f8f7e] w-full h-screen absolute left-0 top-0 z-[25]">
           <motion.div
             initial={{ opacity: 0, right: -200 }}
-            animate={{ opacity: 1, right: 0, duration: 0.5, ease: "circInOut" }}
+            animate={{ opacity: 1, right: 0, ease: "circInOut" }}
             className="bg-[white] h-screen w-[27%] right-0 absolute px-4 py-4 flex flex-col gap-5"
           >
-            <div ref={profileDivRef}>
+            <div ref={profileDivRef} className="flex flex-col gap-3">
               {/* Back Button */}
               <div>
                 <div
