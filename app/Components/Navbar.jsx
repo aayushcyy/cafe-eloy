@@ -80,8 +80,6 @@ export default function Navbar({ showBook, showBook2 }) {
   console.log("the user data is : ", userData);
 
   //calculating current time and date to distribute the slots
-  const upcoming = [];
-  const previous = [];
   useEffect(() => {
     const filterBookings = async () => {
       if (!userData) {
@@ -97,9 +95,12 @@ export default function Navbar({ showBook, showBook2 }) {
       const combined = `${dateAaj} ${timeAbhi}`; // Combine the strings
       const currDate = dayjs(combined, "D MMM YY hA");
 
+      const upcoming = [];
+      const previous = [];
+
       console.log("current time:", currDate);
 
-      userData.userBookings.forEach((booking) => {
+      userData?.userBookings?.forEach((booking) => {
         const bookingDate = dayjs(
           `${booking.date.replace(/(\d{2})(\w{3})(\d{2})/, "$1 $2 $3")}, ${
             booking.slot.split(" - ")[0]
@@ -113,10 +114,9 @@ export default function Navbar({ showBook, showBook2 }) {
           previous.push(booking);
         }
       });
-
-      // ✅ Update state once after processing
-      setUpcomingBooking(upcoming);
-      setPrevBooking(previous);
+      // Update state with new arrays
+      setUpcomingBooking([...upcoming]);
+      setPrevBooking([...previous]);
     };
 
     filterBookings(); // Call the async function
@@ -288,8 +288,8 @@ export default function Navbar({ showBook, showBook2 }) {
                   <div className="flex flex-col gap-3 rounded-md">
                     <p>Upcoming bookings</p>
                     <div className="flex flex-col gap-3 rounded-md">
-                      {upcoming ? (
-                        upcoming.map((booking) => (
+                      {upcomingBooking.length > 0 ? (
+                        upcomingBooking.map((booking) => (
                           <div
                             className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
                             key={booking.bookingId}
@@ -345,8 +345,8 @@ export default function Navbar({ showBook, showBook2 }) {
                   <div className="flex flex-col gap-3">
                     <p>Booking History</p>
                     <div className="flex flex-col gap-3 text-sm rounded-md">
-                      {previous.length < 1 ? (
-                        previous.map((booking) => (
+                      {prevBooking.length > 1 ? (
+                        prevBooking.map((booking) => (
                           <div
                             className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
                             key={booking.bookingId}
