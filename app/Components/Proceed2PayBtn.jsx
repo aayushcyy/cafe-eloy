@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { getCookie } from "cookies-next";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 export default function Proceed2PayBtn({ bookingId }) {
   const [loading, setLoading] = useState(false);
@@ -12,8 +13,9 @@ export default function Proceed2PayBtn({ bookingId }) {
   const [slot, setSlot] = useState(null);
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
-  // const [newVal, setNewVal] = useState(false);
+  const [bookingSuccessMsg, setBookingSuccessMsg] = useState(false);
   const [documentId, setDocumentId] = useState(null);
+  const router = useRouter();
 
   //geting data from cookie
   useEffect(() => {
@@ -89,6 +91,11 @@ export default function Proceed2PayBtn({ bookingId }) {
         }),
       });
       const data = await response.json();
+
+      setBookingSuccessMsg(true);
+      setTimeout(() => {
+        router.push("/book");
+      }, 1000);
       console.log("data after trying updateDoc: ", data);
     } catch (error) {
       console.error("Error updating doc: ", error);
@@ -98,16 +105,18 @@ export default function Proceed2PayBtn({ bookingId }) {
   };
 
   return (
-    <div className="w-[60%] flex justify-center">
-      {loading ? (
-        <Loader height={16} width={16} />
-      ) : (
+    <div className="w-[60%] flex justify-center flex-col items-center">
+      {loading && !bookingSuccessMsg && <Loader height={16} width={16} />}
+      {!loading && !bookingSuccessMsg && (
         <button
           className="w-full text-center font-medium cursor-pointer bg-red-500 hover:bg-[#dc3636] text-white py-2 rounded-md"
           onClick={handleSubmit}
         >
           Proceed to Payment
         </button>
+      )}
+      {bookingSuccessMsg && (
+        <div className="font-medium">Booking Successful!</div>
       )}
     </div>
   );

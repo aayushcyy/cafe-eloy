@@ -263,14 +263,21 @@ export default function Navbar({ showBook, showBook2 }) {
                   
                 /> */}
 
-                <Image
-                  src={avatars[userData.randomAvatar]}
-                  width={100}
-                  height={100}
-                  alt="profile"
-                  onClick={() => setOpenProfile(!openProfile)}
-                  className="w-10 rounded-full bg-transparent cursor-pointer"
-                />
+                {userData.randomAvatar ? (
+                  <Image
+                    src={avatars[userData.randomAvatar]}
+                    width={100}
+                    height={100}
+                    alt="profile"
+                    onClick={() => setOpenProfile(!openProfile)}
+                    className="w-10 rounded-full bg-transparent cursor-pointer"
+                  />
+                ) : (
+                  <UserCircleIcon
+                    className="size-9 cursor-pointer stroke-1.5 hover:text-red-600 transition-all ease-in-out duration-200"
+                    onClick={() => setOpenProfile(!openProfile)}
+                  />
+                )}
               </div>
             )}
           </div>
