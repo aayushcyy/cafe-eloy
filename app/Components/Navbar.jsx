@@ -25,6 +25,7 @@ export default function Navbar({ showBook, showBook2 }) {
   const [animateHover4, setAnimateHover4] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [userBookings, setUserBookings] = useState(null);
   const [upcomingBooking, setUpcomingBooking] = useState([]);
   const [prevBooking, setPrevBooking] = useState([]);
   const profileDivRef = useRef(null);
@@ -79,70 +80,20 @@ export default function Navbar({ showBook, showBook2 }) {
   }, []);
   console.log("the user data is : ", userData);
 
-  //calculating current time and date to distribute the slots
+  //fetching the bookings details
   useEffect(() => {
-    const filterBookings = async () => {
-      if (!userData) {
-        console.log("User data hasn't been found!");
-        return;
-      }
+    const getBookingData = async () => {
+      try {
+        const response = await fetch("/api/database/getBooking");
+        if (!response.ok) {
+          throw new Error("Failed to fetch booking data!");
+        }
 
-      console.log("User data in filter: ", userData);
-
-      const today = new Date();
-      const currentHour = today.getHours();
-
-      //function to parse date from the bookings
-      const parseDate = (dateStr) => {
-        let day = dateStr.slice(0, -5);
-        const match = dateStr.match(/(\d{1,2})([a-z]{3})(\d{2})/i);
-        let month = match[2];
-        let year = "20" + match[3];
-        return new Date(`${day} ${month} ${year}`);
-      };
-      // Function to extract hour from slot
-      const getSlotHour = (slot) => {
-        let timePart = slot.split(" - ")[0];
-        let hour = parseInt(timePart); // Get numeric hour (2)
-
-        if (timePart.includes("PM") && hour !== 12) hour += 12; // Convert to 24-hour format
-        if (timePart.includes("AM") && hour === 12) hour = 0; // Handle "12AM" case
-
-        return hour; // Return 24-hour format hour
-      };
-
-      const upcoming = [];
-      const previous = [];
-
-      // Filtering previous and upcoming bookings
-      const filteredPrevBookings = userData.userBookings.filter((booking) => {
-        const bookingDate = parseDate(booking.date);
-        const bookingHour = getSlotHour(booking.slot);
-
-        return (
-          bookingDate < today ||
-          (bookingDate.toDateString() === today.toDateString() &&
-            bookingHour < currentHour)
-        );
-      });
-
-      const filteredUpcomBookings = userData.userBookings.filter((booking) => {
-        const bookingDate = parseDate(booking.date);
-        const bookingHour = getSlotHour(booking.slot);
-
-        return (
-          bookingDate > today ||
-          (bookingDate.toDateString() === today.toDateString() &&
-            bookingHour >= currentHour)
-        );
-      });
-
-      setUpcomingBooking(filteredUpcomBookings);
-      setPrevBooking(filteredPrevBookings);
+        const data = await response.json();
+        console.log("bookings data!");
+      } catch (error) {}
     };
-
-    filterBookings(); // Call the async function
-  }, [userData]); // Runs only when userData updates
+  }, []);
 
   // ✅ Log the state AFTER it updates
   useEffect(() => {
