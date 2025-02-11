@@ -89,34 +89,56 @@ export default function Navbar({ showBook, showBook2 }) {
 
       console.log("User data in filter: ", userData);
 
-      const dateAaj = dayjs().format("D MMM YY");
-      const timeAbhi = dayjs().format("hA");
+      const today = new Date();
+      const currentHour = today.getHours();
 
-      const combined = `${dateAaj} ${timeAbhi}`; // Combine the strings
-      const currDate = dayjs(combined, "D MMM YY hA");
+      //function to parse date from the bookings
+      const parseDate = (dateStr) => {
+        let day = dateStr.slice(0, -5);
+        const match = dateStr.match(/(\d{1,2})([a-z]{3})(\d{2})/i);
+        let month = match[2];
+        let year = "20" + match[3];
+        return new Date(`${day} ${month} ${year}`);
+      };
+      // Function to extract hour from slot
+      const getSlotHour = (slot) => {
+        let timePart = slot.split(" - ")[0];
+        let hour = parseInt(timePart); // Get numeric hour (2)
+
+        if (timePart.includes("PM") && hour !== 12) hour += 12; // Convert to 24-hour format
+        if (timePart.includes("AM") && hour === 12) hour = 0; // Handle "12AM" case
+
+        return hour; // Return 24-hour format hour
+      };
 
       const upcoming = [];
       const previous = [];
 
-      console.log("current time:", currDate);
+      // Filtering previous and upcoming bookings
+      const filteredPrevBookings = userData.userBookings.filter((booking) => {
+        const bookingDate = parseDate(booking.date);
+        const bookingHour = getSlotHour(booking.slot);
 
-      userData?.userBookings?.forEach((booking) => {
-        const bookingDate = dayjs(
-          `${booking.date.replace(/(\d{2})(\w{3})(\d{2})/, "$1 $2 $3")}, ${
-            booking.slot.split(" - ")[0]
-          }`,
-          "D MMM YY hA"
+        return (
+          bookingDate < today ||
+          (bookingDate.toDateString() === today.toDateString() &&
+            bookingHour < currentHour)
         );
-
-        if (currDate.isBefore(bookingDate)) {
-          upcoming.push(booking);
-        } else {
-          previous.push(booking);
-        }
       });
-      // Update state with new arrays
-      setUpcomingBooking([...upcoming]);
-      setPrevBooking([...previous]);
+
+      const filteredUpcomBookings = userData.userBookings.filter((booking) => {
+        const bookingDate = parseDate(booking.date);
+        const bookingHour = getSlotHour(booking.slot);
+
+        return (
+          bookingDate > today ||
+          (bookingDate.toDateString() === today.toDateString() &&
+            bookingHour >= currentHour)
+        );
+      });
+
+      setUpcomingBooking(filteredUpcomBookings);
+      setPrevBooking(filteredPrevBookings);
     };
 
     filterBookings(); // Call the async function
@@ -345,7 +367,7 @@ export default function Navbar({ showBook, showBook2 }) {
                   <div className="flex flex-col gap-3">
                     <p>Booking History</p>
                     <div className="flex flex-col gap-3 text-sm rounded-md">
-                      {prevBooking.length > 1 ? (
+                      {prevBooking.length > 0 ? (
                         prevBooking.map((booking) => (
                           <div
                             className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
