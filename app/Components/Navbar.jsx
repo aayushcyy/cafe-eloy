@@ -103,6 +103,78 @@ export default function Navbar({ showBook, showBook2 }) {
     }
   };
 
+  useEffect(() => {
+    //categorizing the slots as upcoming or previous bookings
+    const categorizeBookings = (bookings) => {
+      if (bookings) {
+        const today = new Date();
+        const formattedToday = today.toISOString().split("T")[0];
+
+        const previousBookings = [];
+        const upcomingBookings = [];
+
+        function convertDate(dateStr) {
+          const months = {
+            jan: "01",
+            feb: "02",
+            mar: "03",
+            apr: "04",
+            may: "05",
+            jun: "06",
+            jul: "07",
+            aug: "08",
+            sep: "09",
+            oct: "10",
+            nov: "11",
+            dec: "12",
+          };
+          const day = dateStr.slice(0, -5);
+          const monthStr = dateStr.match(/^(\d{1,2})([a-z]{3})(\d{2})$/)[2];
+          const month = months[monthStr];
+          const year = "20" + dateStr.slice(-2);
+          return `${year}-${month}-${day.padStart(2, "0")}`;
+        }
+
+        function convertTimeTo24Hour(timeStr) {
+          // Convert "9PM - 10PM" to [21:00, 22:00] (24-hour format)
+          let [startTime, endTime] = timeStr.split(" - ").map((time) => {
+            let [hour, period] = [parseInt(time.slice(0, -2)), time.slice(-2)];
+            if (period.toLowerCase() === "pm" && hour !== 12) hour += 12;
+            if (period.toLowerCase() === "am" && hour === 12) hour = 0;
+            console.log("formatted booking hour: ", hour);
+            return hour;
+          });
+          return [startTime, endTime];
+        }
+
+        bookings.forEach((booking) => {
+          const bookingDate = convertDate(booking.date);
+          const [startHour] = convertTimeTo24Hour(booking.slot);
+
+          if (bookingDate < formattedToday) {
+            previousBookings.push(booking);
+          } else if (bookingDate > formattedToday) {
+            upcomingBookings.push(booking);
+          } else {
+            const currentHour = today.getHours();
+            if (startHour < currentHour) {
+              previousBookings.push(booking);
+            } else {
+              upcomingBookings.push(booking);
+            }
+          }
+        });
+
+        console.log("previous bookings are! ", previousBookings);
+        if (previousBookings) setPrevBooking(previousBookings);
+        if (upcomingBookings) setUpcomingBooking(upcomingBookings);
+      } else {
+        console.log("bookings isn't fullfilled yet!");
+      }
+    };
+    categorizeBookings(userBookings);
+  }, [userBookings]);
+
   console.log("user bookings are! ", userBookings);
 
   return (
