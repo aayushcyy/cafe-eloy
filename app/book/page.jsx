@@ -121,7 +121,6 @@ export default function page() {
 
   //creating uniqueId
   useEffect(() => {
-    console.log("dateval: ", dateValue, " location val: ", locationValue);
     if (dateValue === "Today") {
       const month = dayjs().format("MM");
       const date = dayjs().format("DD");
@@ -153,6 +152,51 @@ export default function page() {
     }
   };
 
+  //finding todays date and current time hour
+
+  const today = new Date();
+  const formattedToday = today.toISOString().split("T")[0];
+  console.log("today: ", formattedToday);
+
+  function convertDate(dateStr) {
+    const months = {
+      jan: "01",
+      feb: "02",
+      mar: "03",
+      apr: "04",
+      may: "05",
+      jun: "06",
+      jul: "07",
+      aug: "08",
+      sep: "09",
+      oct: "10",
+      nov: "11",
+      dec: "12",
+    };
+    const day = dateStr.slice(0, -5);
+    const monthStr = dateStr.match(/^(\d{1,2})([a-z]{3})(\d{2})$/)[2];
+    const month = months[monthStr];
+    const year = "20" + dateStr.slice(-2);
+    console.log(
+      `converted string date :${year}-${month}-${day.padStart(2, "0")}`
+    );
+    return `${year}-${month}-${day.padStart(2, "0")}`;
+  }
+
+  function convertTimeTo24Hour(timeStr) {
+    // Convert "9PM - 10PM" to [21:00, 22:00] (24-hour format)
+    let [startTime, endTime] = timeStr.split(" - ").map((time) => {
+      let [hour, period] = [parseInt(time.slice(0, -2)), time.slice(-2)];
+      if (period.toLowerCase() === "pm" && hour !== 12) hour += 12;
+      if (period.toLowerCase() === "am" && hour === 12) hour = 0;
+      console.log("formatted booking hour: ", hour);
+      return hour;
+    });
+    return [startTime, endTime];
+  }
+  convertTimeTo24Hour("5PM - 6PM");
+  convertDate("15feb25");
+
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} />
@@ -172,6 +216,7 @@ export default function page() {
                 </p>{" "}
                 <ChevronDownIcon height={20} />
               </div>
+              {/* Location Selector */}
               {optionOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}

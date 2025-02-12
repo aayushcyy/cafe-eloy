@@ -78,7 +78,6 @@ export default function Navbar({ showBook, showBook2 }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log("the user data is : ", userData);
 
   //opening profile and fetching booking details
   const handleProfileOpen = async () => {
@@ -103,6 +102,7 @@ export default function Navbar({ showBook, showBook2 }) {
     }
   };
 
+  //categorizing and updating bookings
   useEffect(() => {
     //categorizing the slots as upcoming or previous bookings
     const categorizeBookings = (bookings) => {
@@ -174,8 +174,6 @@ export default function Navbar({ showBook, showBook2 }) {
     };
     categorizeBookings(userBookings);
   }, [userBookings]);
-
-  console.log("user bookings are! ", userBookings);
 
   return (
     <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B]">
@@ -282,11 +280,6 @@ export default function Navbar({ showBook, showBook2 }) {
             )}
             {userData && (
               <div>
-                {/* <UserCircleIcon
-                  className="size-9 cursor-pointer stroke-1.5 hover:text-red-600 transition-all ease-in-out duration-200"
-                  
-                /> */}
-
                 {userData.randomAvatar ? (
                   <Image
                     src={avatars[userData.randomAvatar]}
@@ -345,7 +338,7 @@ export default function Navbar({ showBook, showBook2 }) {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4 w-full h-[65vh] overflow-y-scroll">
+                <div className="flex flex-col pr-1 gap-4 w-full h-[65vh] overflow-y-scroll">
                   {/* Upcoming Bookings */}
                   <div className="flex flex-col gap-3 rounded-md">
                     <p>Upcoming bookings</p>
@@ -353,7 +346,7 @@ export default function Navbar({ showBook, showBook2 }) {
                       {upcomingBooking.length > 0 ? (
                         upcomingBooking.map((booking) => (
                           <div
-                            className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
+                            className="flex justify-between border-[2px] border-[#bebebe57] px-2 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
                             key={booking.bookingId}
                           >
                             <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
@@ -397,7 +390,7 @@ export default function Navbar({ showBook, showBook2 }) {
                       {prevBooking.length > 0 ? (
                         prevBooking.map((booking) => (
                           <div
-                            className="flex justify-between border-[2px] border-[#bebebe57] px-3 pb-1 pt-2 text-sm rounded-md bg-red-100 relative"
+                            className="flex justify-between border-[2px] border-[#bebebe57] px-2 pb-1 pt-2 text-sm rounded-md bg-red-100 relative"
                             key={booking.bookingId}
                           >
                             <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
