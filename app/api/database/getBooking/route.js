@@ -1,27 +1,47 @@
-import { auth, doc, getDoc, db } from "@/firebase/firebase";
+import { db } from "@/firebase/firebase";
+import { query, where, getDocs, collection } from "firebase/firestore";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
-    const user = auth.currentUser;
-    const uid = user.uid;
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
+    const body = await req.json();
+    const { email } = body;
 
-    if (!docSnap.exists()) {
+    if (!email) {
+      return new Response(
+        JSON.stringify({
+          message: "missing email field!",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
       return new Response(
         JSON.stringify({
           success: false,
-          message: "Error getting document at docSnap.exists()",
+          message: "No document found in the server!",
         }),
-        { status: 404, headers: { "Content-Type": "application/json" } }
+        {
+          status: 404,
+          headers: { "Content-Type": "application/json" },
+        }
       );
     }
+
+    const userDoc = querySnapshot.docs[0];
+    const userData = { id: userDoc.id, ...userDoc.data() };
 
     return new Response(
       JSON.stringify({
         success: true,
         message: "booking document found successful!",
-        data: docSnap.data(),
+        data: userData,
       }),
       {
         status: 200,

@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import useMyStore from "../store/store";
 import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
+import { auth } from "@/firebase/firebase";
 
 export default function Navbar({ showBook, showBook2 }) {
   //hover animation hooks
@@ -80,29 +80,30 @@ export default function Navbar({ showBook, showBook2 }) {
   }, []);
   console.log("the user data is : ", userData);
 
-  //fetching the bookings details
-  useEffect(() => {
-    const getBookingData = async () => {
-      try {
-        const response = await fetch("/api/database/getBooking");
-        if (!response.ok) {
-          throw new Error("Failed to fetch booking data!");
-        }
+  //opening profile and fetching booking details
+  const handleProfileOpen = async () => {
+    setOpenProfile(!openProfile);
+    if (!userData || !userData.email) return;
+    try {
+      const response = await fetch("/api/database/getBooking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: userData.email }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch booking data!");
+      }
+      const data = await response.json();
+      console.log("bookings data! ", data.data.bookings);
+      setUserBookings(data.data.bookings);
+    } catch (error) {
+      console.error("Error fetching booking data:", error);
+    }
+  };
 
-        const data = await response.json();
-        console.log("bookings data!");
-      } catch (error) {}
-    };
-  }, []);
-
-  // ✅ Log the state AFTER it updates
-  useEffect(() => {
-    console.log("Updated upcoming bookings: ", upcomingBooking);
-  }, [upcomingBooking]);
-
-  useEffect(() => {
-    console.log("Updated previous bookings: ", prevBooking);
-  }, [prevBooking]);
+  console.log("user bookings are! ", userBookings);
 
   return (
     <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B]">
@@ -220,7 +221,7 @@ export default function Navbar({ showBook, showBook2 }) {
                     width={100}
                     height={100}
                     alt="profile"
-                    onClick={() => setOpenProfile(!openProfile)}
+                    onClick={handleProfileOpen}
                     className="w-10 rounded-full bg-transparent cursor-pointer"
                   />
                 ) : (
