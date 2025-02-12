@@ -1,12 +1,16 @@
 import React from "react";
 
-export default function BookingDiv({ slot = "10AM - 11AM", available = true }) {
+export default function BookingDiv({
+  slot = "10AM - 11AM",
+  available = true,
+  fadeDiv,
+}) {
   return (
     <div
       className={
-        available
+        available && !fadeDiv
           ? "w-full flex flex-col bg-white rounded-lg overflow-hidden cursor-pointer"
-          : "w-full flex flex-col bg-white rounded-lg overflow-hidden cursor-not-allowed"
+          : "w-full flex flex-col bg-[#dcdcdcc5] rounded-lg overflow-hidden cursor-not-allowed"
       }
     >
       <div className="w-full flex text-xs gap-24 font-medium py-2 px-3">

@@ -10,6 +10,7 @@ import Loader from "../Components/Loader";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 import useMyStore from "../store/store";
+import { Covered_By_Your_Grace } from "next/font/google";
 
 export default function page() {
   //location and date value
@@ -155,9 +156,11 @@ export default function page() {
   //finding todays date and current time hour
 
   const today = new Date();
+  const currentHour = today.getHours();
   const formattedToday = today.toISOString().split("T")[0];
-  console.log("today: ", formattedToday);
+  console.log("today: and hours : ", formattedToday, currentHour);
 
+  //function to convert string date into a proper date
   function convertDate(dateStr) {
     const months = {
       jan: "01",
@@ -173,29 +176,50 @@ export default function page() {
       nov: "11",
       dec: "12",
     };
-    const day = dateStr.slice(0, -5);
-    const monthStr = dateStr.match(/^(\d{1,2})([a-z]{3})(\d{2})$/)[2];
-    const month = months[monthStr];
-    const year = "20" + dateStr.slice(-2);
-    console.log(
-      `converted string date :${year}-${month}-${day.padStart(2, "0")}`
-    );
-    return `${year}-${month}-${day.padStart(2, "0")}`;
-  }
+    // Use regex to correctly extract day, month, and year
+    const match = dateStr.match(/^(\d{1,2})([a-z]{3})(\d{2})$/);
+    if (!match) {
+      console.error("Invalid date format. Expected format: '12feb25'", match);
+      return null;
+    }
 
-  function convertTimeTo24Hour(timeStr) {
-    // Convert "9PM - 10PM" to [21:00, 22:00] (24-hour format)
-    let [startTime, endTime] = timeStr.split(" - ").map((time) => {
-      let [hour, period] = [parseInt(time.slice(0, -2)), time.slice(-2)];
+    const day = match[1]; // First capture group (day)
+    const monthStr = match[2].toLowerCase(); // Second capture group (month in lowercase)
+    const year = "20" + match[3]; // Third capture group (year)
+
+    // Convert month abbreviation to number
+    const month = months[monthStr];
+
+    if (!month) {
+      console.error("Invalid month abbreviation:", monthStr);
+      return null;
+    }
+
+    // Format as YYYY-MM-DD
+    const formattedDate = `${year}-${month}-${day.padStart(2, "0")}`;
+    console.log(`Converted date: ${formattedDate}`);
+    return formattedDate;
+  }
+  //function to convert string slot into a proper day hour
+  function isSlotBefore(timeStr) {
+    let [startTime] = timeStr.split(" - ").map((time) => {
+      let hour = parseInt(time.slice(0, -2)); // Extract hour
+      let period = time.slice(-2); // Extract AM/PM
+
       if (period.toLowerCase() === "pm" && hour !== 12) hour += 12;
       if (period.toLowerCase() === "am" && hour === 12) hour = 0;
-      console.log("formatted booking hour: ", hour);
+
       return hour;
     });
-    return [startTime, endTime];
+
+    return startTime <= currentHour;
   }
-  convertTimeTo24Hour("5PM - 6PM");
-  convertDate("15feb25");
+
+  isSlotBefore("5PM - 6PM");
+
+  dateValue === "Today"
+    ? convertDate(dayjs().format("DMMMYY").toLowerCase())
+    : convertDate(dateValue.toLowerCase());
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
@@ -321,9 +345,24 @@ export default function page() {
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
                       key={timeSlot}
-                      onClick={() => handleSlotClick(isAvailable, timeSlot)}
+                      onClick={() => {
+                        if (dateValue !== "Today" || !isSlotBefore(timeSlot)) {
+                          handleSlotClick(isAvailable, timeSlot);
+                        }
+                      }}
+                      className={
+                        dateValue !== "Today" || !isSlotBefore(timeSlot)
+                          ? "block"
+                          : "hidden"
+                      }
                     >
-                      <BookingDiv slot={timeSlot} available={isAvailable} />
+                      <BookingDiv
+                        fadeDiv={
+                          dateValue === "Today" && isSlotBefore(timeSlot)
+                        }
+                        slot={timeSlot}
+                        available={isAvailable}
+                      />
                     </div>
                   ))
                 ) : (
