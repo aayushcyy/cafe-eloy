@@ -67,7 +67,7 @@ export default function page() {
             date: null,
             bookingId: null,
             randomAvatar: randomAvatar,
-            userBookings: data.userData.bookings,
+            userBookings: [],
           })
         );
         console.log("cookie has been set!");
