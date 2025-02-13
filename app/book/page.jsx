@@ -232,23 +232,26 @@ export default function page() {
     : convertDate(dateValue.toLowerCase());
 
   return (
-    <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col lg:gap-0 gap-16 lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
-      <div className="w-full h-[90vh] flex justify-center">
+      <div className="w-full h-[90vh] flex lg:flex-row  lg:px-0 flex-col justify-center px-5">
         {/* Input Container */}
-        <div className="w-[40%] flex  gap-7">
+        <div className="lg:w-[40%] lg:flex-row flex flex-col lg:gap-7">
           {/* Location Selector */}
-          <div ref={locationDivRef} className="flex flex-col w-[60%] gap-2">
-            <p className="text-sm text-gray-400">Location</p>
+          <div
+            ref={locationDivRef}
+            className="flex flex-col w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:block lg:top-0 lg:left-0 absolute top-12 left-5"
+          >
+            <p className="lg:text-sm text-xs text-gray-400">Location</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
                 onClick={() => setOptionOpen(!optionOpen)}
-                className="flex items-center justify-between py-2 cursor-pointer px-3"
+                className="flex items-center justify-between lg:py-2 px-3 py-1.5 cursor-pointer"
               >
-                <p className="font-medium">
+                <p className="font-medium lg:text-base text-[13px]">
                   {locationValue ? locationValue : "Select Location"}
                 </p>{" "}
-                <ChevronDownIcon height={20} />
+                <ChevronDownIcon height={100} className="size-5 lg:size-6" />
               </div>
               {/* Location Selector */}
               {optionOpen && (
@@ -267,7 +270,7 @@ export default function page() {
                       setLocationValue("Samta Colony, Raipur");
                       setOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer"
+                    className="py-2 px-3 cursor-pointer lg:text-base text-[13px]"
                   >
                     Samta Colony, Raipur
                   </p>
@@ -277,7 +280,7 @@ export default function page() {
                       setLocationValue("Jagganath Chowk, Kota, Raipur");
                       setOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer"
+                    className="py-2 px-3 cursor-pointer lg:text-base text-[13px]"
                   >
                     Jagganath Chowk, Kota, Raipur
                   </p>
@@ -286,7 +289,10 @@ export default function page() {
             </div>
           </div>
           {/* Date Selector */}
-          <div ref={dateDivRef} className="flex flex-col w-[20%] gap-2">
+          <div
+            ref={dateDivRef}
+            className="hidden flex-col w-[20%] gap-2 lg:flex"
+          >
             <p className="text-sm text-gray-400">Date</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
@@ -344,13 +350,77 @@ export default function page() {
           </div>
         </div>
         {/* showing booking options */}
-        <div className="w-[40%] flex flex-col">
-          <div className="w-[90%] flex flex-col gap-2">
-            <p className="text-sm text-gray-400">Available Slots</p>
+        <div className="lg:w-[40%] w-full flex flex-col">
+          <div className="lg:w-[90%] w-full flex flex-col gap-2">
+            <div className="flex justify-between w-full relative">
+              <p className="lg:text-sm text-xs text-gray-400">
+                Available Slots
+              </p>
+              <div
+                ref={dateDivRef}
+                className="flex flex-col w-[28%] gap-2 lg:hidden absolute right-0 top-0 rounded-b-sm overflow-hidden"
+              >
+                <div className="flex flex-col text-sm rounded-md">
+                  <div
+                    onClick={() => setDateOptionOpen(!dateOptionOpen)}
+                    className="flex items-center justify-between gap-2 cursor-pointer pl-2"
+                  >
+                    <p className="font-medium text-xs">
+                      {dateValue === "Today" ? "Today" : dateValue.slice(0, -2)}
+                    </p>{" "}
+                    <ChevronDownIcon height={18} />
+                  </div>
+                  {dateOptionOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        ease: "easeInOut",
+                        type: "spring",
+                      }}
+                      className="flex flex-col text-xs border-t-[1px] border-[#ddddddc6]"
+                    >
+                      <p
+                        onClick={() => {
+                          setDateValue("Today");
+                          setDateOptionOpen(false);
+                        }}
+                        className="py-1.5 px-2 cursor-pointer bg-white"
+                      >
+                        Today
+                      </p>
+                      <div className="w-full h-[1px] bg-[#ddddddc6]"></div>
+                      <p
+                        onClick={() => {
+                          setDateValue(tommDate);
+                          setDateOptionOpen(false);
+                        }}
+                        className="py-1.5 px-2 cursor-pointer bg-white"
+                      >
+                        {tommDate.slice(0, -2)}
+                      </p>
+                      <div className="w-full h-[1px] bg-[#ddddddc6]"></div>
+                      <p
+                        onClick={() => {
+                          setDateValue(afterTommDate);
+                          setDateOptionOpen(false);
+                        }}
+                        className="py-1.5 px-2 cursor-pointer bg-white"
+                      >
+                        {afterTommDate.slice(0, -2)}
+                      </p>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            </div>
             {loading ? (
-              <Loader height={80} width={80} />
+              <div className="flex items-center justify-center">
+                <Loader height={80} width={80} />
+              </div>
             ) : (
-              <div className="flex flex-col gap-[10px] h-[85vh] pr-5 overflow-y-scroll">
+              <div className="flex flex-col gap-[10px] h-[75vh] lg:pr-5 overflow-y-scroll pb-10">
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
@@ -383,7 +453,10 @@ export default function page() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm font-medium text-center">
+                  <p
+                    className="lg:text-sm text-xs font-medium text-center lg:mt-0 mt-40
+                  "
+                  >
                     Please Select Date and Branch to see the Availability
                   </p>
                 )}
