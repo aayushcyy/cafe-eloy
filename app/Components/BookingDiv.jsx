@@ -13,10 +13,10 @@ export default function BookingDiv({
           : "w-full flex flex-col border-[1px] border-[#0000001f] bg-[#e6e6e6] rounded-lg overflow-hidden cursor-not-allowed"
       }
     >
-      <div className="w-full flex lg:text-xs lg:gap-24 lg:justify-start lg:py-2 lg:px-3 justify-between py-1 px-2 text-[11px] font-medium ">
+      <div className="w-full flex lg:text-xs lg:gap-24 lg:justify-start justify-between lg:py-2 lg:px-3 py-1 px-2 text-[11px] font-medium ">
         <p className="w-20">{slot}</p>
-        <p>Rs.200</p>
-        <p>{available ? "Available" : "NA"}</p>
+        <p className="lg:w-0 w-16">Rs.200</p>
+        <p className="lg:w-0 w-14">{available ? "Available" : "NA"}</p>
       </div>
       <div
         className={

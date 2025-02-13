@@ -136,10 +136,10 @@ export default function page() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar />
-      <div className="w-full h-[90vh] gap-28 flex relative">
-        <div className="w-[50%] h-full flex pt-40 justify-center">
+      <div className="w-full h-[90vh] gap-28 flex lg:flex-row flex-col relative">
+        <div className="w-[50%] h-full lg:flex hidden pt-40 justify-center">
           <p className="text-7xl font-bold italic -rotate-6">
             {showSignup ? "Sign up" : "Login"} to <br /> get started
           </p>
@@ -148,16 +148,16 @@ export default function page() {
         {/* Login form */}
         {!showSignup && (
           <form
-            className="w-[30%] flex px-10 flex-col pt-10"
+            className="lg:w-[30%] flex px-10 flex-col pt-10"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">
-              <p className="text-3xl font-semibold my-8 text-[#331A0B]">
+              <p className="lg:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
                 Login
               </p>
-              <div className="flex items-center bg-[#ffffff8a] px-2 py-1 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
                 <AtSymbolIcon
-                  className="size-5 text-[#807f7f]"
+                  className="lg:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -171,8 +171,11 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 py-1 rounded-lg mb-1">
-                <KeyIcon className="size-5 text-[#807f7f]" strokeWidth="2" />
+              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg mb-1">
+                <KeyIcon
+                  className="lg:size-5 size-4 text-[#807f7f]"
+                  strokeWidth="2"
+                />
                 <input
                   type={`${showPassword ? "text" : "password"}`}
                   name="password"
@@ -184,13 +187,13 @@ export default function page() {
                 />
                 {showPassword ? (
                   <EyeIcon
-                    className="size-6 cursor-pointer text-[#2aa1f1]"
+                    className="lg:size-6 size-5 cursor-pointer text-[#2aa1f1]"
                     strokeWidth="2"
                     onClick={() => setShowPassword(!showPassword)}
                   />
                 ) : (
                   <EyeSlashIcon
-                    className="size-6 cursor-pointer text-[#2aa1f1]"
+                    className="lg:size-5 size-5 cursor-pointer text-[#2aa1f1]"
                     strokeWidth="2"
                     onClick={() => setShowPassword(!showPassword)}
                   />
@@ -235,15 +238,18 @@ export default function page() {
         {/* Sign up form */}
         {showSignup && (
           <form
-            className="w-[30%] flex px-10 flex-col pt-7"
+            className="lg:w-[30%] flex px-10 flex-col pt-7"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">
-              <p className="text-3xl font-semibold my-8 text-[#331A0B]">
+              <p className="lg:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
                 Sign up
               </p>
-              <div className="flex items-center bg-[#ffffff8a] px-2 py-1 rounded-lg">
-                <UserIcon className="size-5 text-[#807f7f]" strokeWidth="2" />
+              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+                <UserIcon
+                  className="lg:size-5 size-4 text-[#807f7f]"
+                  strokeWidth="2"
+                />
                 <input
                   type="text"
                   placeholder="Enter your name"
@@ -253,9 +259,9 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 py-1 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
                 <AtSymbolIcon
-                  className="size-5 text-[#807f7f]"
+                  className="lg:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -269,8 +275,11 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 py-1 rounded-lg">
-                <KeyIcon className="size-5 text-[#807f7f]" strokeWidth="2" />
+              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+                <KeyIcon
+                  className="lg:size-5 size-4 text-[#807f7f]"
+                  strokeWidth="2"
+                />
                 <input
                   type={`${showPassword ? "text" : "password"}`}
                   name="password"

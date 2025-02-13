@@ -18,7 +18,7 @@ export default async function page({ params }) {
   return (
     <div className="w-full h-screen flex flex-col lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} showBook2={false} />
-      <div className="w-full flex justify-center h-[90vh]">
+      <div className="w-full flex justify-center lg:h-[90vh]">
         <div className="flex flex-col lg:w-2/4 lg:px-0 items-center pt-10 relative">
           {/* Receipt div */}
           <div className="bg-[#FFFFFF] lg:pt-5 pt-2 flex flex-col lg:w-[60%] w-[55%] relative">
