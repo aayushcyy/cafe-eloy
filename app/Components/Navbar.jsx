@@ -293,22 +293,22 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
           <motion.div
             initial={{ opacity: 0, right: -200 }}
             animate={{ opacity: 1, right: 0, ease: "circInOut" }}
-            className="bg-[white] h-screen w-[27%] right-0 absolute px-4 py-4 flex flex-col gap-5"
+            className="bg-[white] h-screen lg:w-[27%] lg:px-4 lg:py-4 lg:gap-5 w-[75%] px-3 py-4 right-0 absolute flex flex-col gap-2"
           >
-            <div ref={profileDivRef} className="flex flex-col gap-3">
+            <div ref={profileDivRef} className="flex flex-col lg:gap-3 gap-1">
               {/* Back Button */}
               <div>
                 <div
-                  className="w-8 h-7 items-center justify-start cursor-pointer flex"
+                  className="lg:w-8 lg:h-7 w-5 h-4 items-center justify-start cursor-pointer flex"
                   onClick={() => setOpenProfile(false)}
                 >
                   <ArrowLeftIcon className="size-6 stroke-2" />
                 </div>
               </div>
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col lg:gap-5 gap-3">
                 {/* User Details */}
-                <div className="flex gap-4 py-2">
-                  <div className="w-14 h-14 flex items-center justify-center text-xl bg-red-400 rounded-[100%] relative">
+                <div className="flex lg:gap-4 items-center gap-2 py-2">
+                  <div className="lg:w-14 lg:h-14 w-10 h-10 flex items-center justify-center text-xl rounded-[100%] relative">
                     <Image
                       src={avatars[userData.randomAvatar]}
                       height={100}
@@ -316,11 +316,11 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                       alt="profile img"
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <p className="text-2xl">
+                  <div className="flex flex-col lg:mb-0 mb-1">
+                    <p className="lg:text-2xl text-lg">
                       {userData ? userData.name : "User"}
                     </p>
-                    <p className="text-[#000000a7]">
+                    <p className="text-[#000000a7] lg:text-base text-xs">
                       {userData ? userData.email : ""}
                     </p>
                   </div>
@@ -328,18 +328,18 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                 <div className="flex flex-col pr-1 gap-4 w-full h-[65vh] overflow-y-scroll">
                   {/* Upcoming Bookings */}
                   <div className="flex flex-col gap-3 rounded-md">
-                    <p>Upcoming bookings</p>
+                    <p className="lg:text-base text-xs">Upcoming bookings</p>
                     <div className="flex flex-col gap-3 rounded-md">
                       {upcomingBooking.length > 0 ? (
                         upcomingBooking.map((booking) => (
                           <div
-                            className="flex justify-between border-[2px] border-[#bebebe57] px-2 pb-1 pt-2 text-sm rounded-md bg-green-100 relative"
+                            className="flex justify-between lg:border-[2px] lg:px-2 lg:pb-1 lg:pt-2 lg:text-sm lg:rounded-md border-[1px] border-[#bebebe57] px-1 pb-[2px] pt-[5px] text-xs rounded-sm bg-green-100 relative"
                             key={booking.bookingId}
                           >
-                            <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
+                            <p className="text-orange-700 lg:text-xs lg:px-1 lg:-top-[8px] text-[9px] font-medium bg-white rounded-sm absolute italic px-[2px] -top-[5px] leading-[9px]">
                               {booking.bookingId}
                             </p>
-                            <div className="">
+                            <div className="text-[10px] leading-tight lg:leading-normal lg:text-xs flex flex-col lg:gap-0 gap-[1px]">
                               <p className="capitalize">
                                 Date:{" "}
                                 <span className="capitalize">
@@ -350,13 +350,15 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                                 </span>
                               </p>
                               <p>
-                                Branch:{" "}
+                                <span className="lg:inline hidden">
+                                  Branch:
+                                </span>{" "}
                                 {booking.branch.includes("samta")
                                   ? "Samta Colony, Raipur"
                                   : "Kota Chowk, Raipur"}
                               </p>
                             </div>
-                            <div>
+                            <div className="text-[10px] leading-tight lg:leading-normal lg:text-xs flex flex-col lg:gap-0 gap-[1px]">
                               <p>Slot: {booking.slot}</p>
                               <p>Paid: {booking.amountPaid}</p>
                             </div>
@@ -369,21 +371,21 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                       )}
                     </div>
                   </div>
-                  <div className="w-full h-[1px] bg-[#7a7a7a63] mt-1"></div>
+                  <div className="w-full lg:h-[1px] h-[.5px] bg-[#7a7a7a31] mt-1"></div>
                   {/* Booking History Section */}
                   <div className="flex flex-col gap-3">
-                    <p>Booking History</p>
+                    <p className="lg:text-base text-xs">Booking History</p>
                     <div className="flex flex-col gap-3 text-sm rounded-md">
                       {prevBooking.length > 0 ? (
                         prevBooking.map((booking) => (
                           <div
-                            className="flex justify-between border-[2px] border-[#bebebe57] px-2 pb-1 pt-2 text-sm rounded-md bg-red-100 relative"
+                            className="flex justify-between lg:border-[2px] lg:px-2 lg:pb-1 lg:pt-2 lg:text-sm lg:rounded-md border-[1px] border-[#bebebe57] px-1 pb-[2px] pt-[5px] text-xs rounded-sm bg-red-100 relative"
                             key={booking.bookingId}
                           >
-                            <p className="text-orange-700 text-xs font-medium bg-white rounded-sm absolute italic -top-[8px] px-1">
+                            <p className="text-orange-700 lg:text-xs lg:px-1 lg:-top-[8px] text-[9px] font-medium bg-white rounded-sm absolute italic px-[2px] -top-[5px] leading-[9px]">
                               {booking.bookingId}
                             </p>
-                            <div className="">
+                            <div className="text-[10px] leading-tight lg:leading-normal lg:text-xs flex flex-col lg:gap-0 gap-[1px]">
                               <p className="capitalize">
                                 Date:{" "}
                                 <span className="capitalize">
@@ -394,13 +396,15 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                                 </span>
                               </p>
                               <p>
-                                Branch:{" "}
+                                <span className="lg:inline-block hidden">
+                                  Branch:
+                                </span>{" "}
                                 {booking.branch.includes("samta")
                                   ? "Samta Colony, Raipur"
                                   : "Kota Chowk, Raipur"}
                               </p>
                             </div>
-                            <div>
+                            <div className="text-[10px] leading-tight lg:leading-normal lg:text-xs flex flex-col lg:gap-0 gap-[1px]">
                               <p>Slot: {booking.slot}</p>
                               <p>Paid: {booking.amountPaid}</p>
                             </div>
@@ -416,10 +420,11 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                 </div>
               </div>
               <div
-                className="flex absolute bottom-10 left-5 cursor-pointer underline text-black"
+                className="flex absolute bottom-10 left-5 cursor-pointer underline text-black lg:text-base text-xs"
                 onClick={handleSignOut}
               >
-                <ArrowLeftStartOnRectangleIcon className="size-6" /> Logout
+                <ArrowLeftStartOnRectangleIcon className="lg:size-6 size-4" />{" "}
+                Logout
               </div>
             </div>
           </motion.div>
