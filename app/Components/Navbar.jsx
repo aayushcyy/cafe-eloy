@@ -175,7 +175,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
   }, [userBookings]);
 
   return (
-    <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B] lg:px-0 px-2">
+    <div className="w-full flex justify-between items-center lg:py-3 py-2 text-base font-montserrat font-medium text-[#331A0B] lg:px-0 px-2">
       {/* Logo */}
       <div className="relative lg:w-28 w-20">
         <Link href={"/"}>
@@ -265,6 +265,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                 </motion.div>
               </Link>
             )}
+            {/* Profile Open */}
             {userData && (
               <div className="lg:mr-0 mr-3">
                 {userData.randomAvatar ? (
@@ -274,7 +275,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                     height={100}
                     alt="profile"
                     onClick={handleProfileOpen}
-                    className="w-10 rounded-full bg-transparent cursor-pointer"
+                    className="lg:w-10 lg:mb-0 w-8 mb-1 rounded-full bg-transparent cursor-pointer"
                   />
                 ) : (
                   <UserCircleIcon
