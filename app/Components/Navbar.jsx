@@ -15,9 +15,8 @@ import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import useMyStore from "../store/store";
 import { useRouter } from "next/navigation";
-import { auth } from "@/firebase/firebase";
 
-export default function Navbar({ showBook, showBook2 }) {
+export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
   //hover animation hooks
   const [animateHover, setAnimateHover] = useState(false);
   const [animateHover2, setAnimateHover2] = useState(false);
@@ -185,6 +184,7 @@ export default function Navbar({ showBook, showBook2 }) {
       {!pathName.includes("login") && (
         <div className="flex justify-between items-center gap-56">
           <div className="flex gap-14">
+            {/* Menu Option */}
             <div
               className="flex flex-col group relative"
               onMouseEnter={() => setAnimateHover(true)}
@@ -199,6 +199,7 @@ export default function Navbar({ showBook, showBook2 }) {
                 className="bg-[#331A0B] h-[1px] w-full -mt-[2px]"
               ></motion.div>
             </div>
+            {/* About Us Option */}
             <div
               className="flex flex-col group relative"
               onMouseEnter={() => setAnimateHover2(true)}
@@ -213,6 +214,7 @@ export default function Navbar({ showBook, showBook2 }) {
                 className="bg-[#331A0B] h-[1px] w-full -mt-[2px]"
               ></motion.div>
             </div>
+            {/* Feedback Option */}
             <div
               className="flex flex-col group relative"
               onMouseEnter={() => setAnimateHover3(true)}
@@ -228,41 +230,16 @@ export default function Navbar({ showBook, showBook2 }) {
               ></motion.div>
             </div>
           </div>
+          {/* Icons */}
           <div className="flex items-center gap-10">
+            {/* Cart Icon */}
             {pathName.includes("menu") && (
               <div className="cursor-pointer relative">
                 <div className="w-[6px] h-[6px] rounded-full bg-primaryRed z-20 absolute right-[2px] -top-[2px]"></div>
                 <ShoppingBagIcon className="size-5 stroke-1.5" />
               </div>
             )}
-            {showBook && !userData && (
-              <div
-                className="flex flex-col group relative"
-                onMouseEnter={() => setAnimateHover4(true)}
-                onMouseLeave={() => setAnimateHover4(false)}
-              >
-                <Link href="/login">Sign Up</Link>
-                <motion.div
-                  initial={{ width: 0, originX: 0 }}
-                  animate={
-                    animateHover4 ? { width: "100%", originX: 1 } : { width: 0 }
-                  }
-                  className="bg-[#331A0B] h-[1px] w-full -mt-[2px]"
-                ></motion.div>
-              </div>
-            )}
-            {!showBook && !userData ? (
-              <Link href={"/login"}>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer"
-                >
-                  Sign up
-                </motion.div>
-              </Link>
-            ) : showBook2 ? (
+            {!showBook && !userData && !pathName.includes("book") && (
               <Link href={"/book"}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -270,7 +247,19 @@ export default function Navbar({ showBook, showBook2 }) {
                   transition={{ duration: 0.2 }}
                   className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer"
                 >
-                  Book Now!
+                  Book Cabin
+                </motion.div>
+              </Link>
+            )}{" "}
+            {!showBook2 && !isUsserLoggedIn && !isLoggedIn ? (
+              <Link href={"/login"}>
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer"
+                >
+                  Sign in
                 </motion.div>
               </Link>
             ) : (

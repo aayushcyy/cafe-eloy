@@ -10,13 +10,11 @@ import Loader from "../Components/Loader";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 import useMyStore from "../store/store";
-import { Covered_By_Your_Grace } from "next/font/google";
 
 export default function page() {
   //location and date value
   const [locationValue, setLocationValue] = useState("");
   const [dateValue, setDateValue] = useState("Today");
-
   const [optionOpen, setOptionOpen] = useState(false);
   const [dateOptionOpen, setDateOptionOpen] = useState(false);
   const [tommDate, setTommDate] = useState("");
@@ -24,12 +22,26 @@ export default function page() {
   const [loading, setLoading] = useState(false);
   const [slotsData, setSlotsData] = useState(null);
   const [uniquePathId, setUniquePathId] = useState("");
+  const [isUsserLoggedIn, setIsUsserLoggedIn] = useState(false);
   const locationDivRef = useRef(null);
   const dateDivRef = useRef(null);
   const router = useRouter();
 
   //extracting zustand values
-  const { setDocumentId } = useMyStore();
+  const { setIsLoggedIn } = useMyStore();
+
+  //checking if user logged in or not?
+  useEffect(() => {
+    const userD = getCookie("user");
+    if (userD) {
+      setIsUsserLoggedIn(true);
+      setIsLoggedIn(true);
+      console.log("userData found!");
+    } else {
+      setIsUsserLoggedIn(false);
+      console.log("user data not found!");
+    }
+  }, [isUsserLoggedIn]);
 
   //generating upcoming 2 days
   useEffect(() => {
@@ -215,15 +227,13 @@ export default function page() {
     return startTime <= currentHour;
   }
 
-  isSlotBefore("5PM - 6PM");
-
   dateValue === "Today"
     ? convertDate(dayjs().format("DMMMYY").toLowerCase())
     : convertDate(dateValue.toLowerCase());
 
   return (
     <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
-      <Navbar showBook={false} />
+      <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
       <div className="w-full h-[90vh] flex justify-center">
         {/* Input Container */}
         <div className="w-[40%] flex  gap-7">
@@ -346,8 +356,15 @@ export default function page() {
                     <div
                       key={timeSlot}
                       onClick={() => {
-                        if (dateValue !== "Today" || !isSlotBefore(timeSlot)) {
-                          handleSlotClick(isAvailable, timeSlot);
+                        if (isUsserLoggedIn) {
+                          if (
+                            dateValue !== "Today" ||
+                            !isSlotBefore(timeSlot)
+                          ) {
+                            handleSlotClick(isAvailable, timeSlot);
+                          }
+                        } else {
+                          router.push("/../login");
                         }
                       }}
                       className={

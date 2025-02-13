@@ -10,7 +10,7 @@ export default function BookingDiv({
       className={
         available && !fadeDiv
           ? "w-full flex flex-col bg-white rounded-lg overflow-hidden cursor-pointer"
-          : "w-full flex flex-col bg-[#dcdcdcc5] rounded-lg overflow-hidden cursor-not-allowed"
+          : "w-full flex flex-col border-[1px] border-[#0000001f] bg-[#e6e6e6] rounded-lg overflow-hidden cursor-not-allowed"
       }
     >
       <div className="w-full flex text-xs gap-24 font-medium py-2 px-3">
