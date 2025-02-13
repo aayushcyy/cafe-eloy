@@ -5,10 +5,10 @@ import pasta from "../public/eatIllustration.png";
 
 export default function Home() {
   return (
-    <div className="w-full h-screen flex flex-col px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar />
       <div className="flex w-full h-[80vh] px-3">
-        <div className="w-[45%] flex flex-col gap-11 justify-center pt-16">
+        <div className="lg:w-[45%] w-full flex flex-col gap-11 justify-center pt-16">
           <div className="w-[80%] font-tannimbus font-semibold italic">
             <p className="text-6xl">
               it's not about Food, it's about an Experience.

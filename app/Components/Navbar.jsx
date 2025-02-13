@@ -175,15 +175,17 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
   }, [userBookings]);
 
   return (
-    <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B]">
-      <div className="relative w-28">
+    <div className="w-full flex justify-between items-center py-3 text-base font-montserrat font-medium text-[#331A0B] lg:px-0 px-2">
+      {/* Logo */}
+      <div className="relative lg:w-28 w-20">
         <Link href={"/"}>
           <Image src={logo} alt="" />
         </Link>
       </div>
       {!pathName.includes("login") && (
         <div className="flex justify-between items-center gap-56">
-          <div className="flex gap-14">
+          {/* menu */}
+          <div className="lg:flex gap-14 hidden">
             {/* Menu Option */}
             <div
               className="flex flex-col group relative"
@@ -245,30 +247,26 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 1 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer"
+                  className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer lg:block hidden"
                 >
                   Book Cabin
                 </motion.div>
               </Link>
             )}{" "}
-            {!showBook2 && !isUsserLoggedIn && !isLoggedIn ? (
+            {!showBook2 && !isUsserLoggedIn && !isLoggedIn && (
               <Link href={"/login"}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 1 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-[#D21C27] py-2.5 px-4 text-sm rounded-full text-white cursor-pointer"
+                  className="bg-[#D21C27] lg:py-2.5 lg:px-4 lg:text-sm lg:mb-0 py-1.5 px-2.5 mr-3 text-xs mb-1 rounded-full text-white cursor-pointer"
                 >
                   Sign in
                 </motion.div>
               </Link>
-            ) : (
-              <div className="bg-transparent py-2.5 px-4 text-sm rounded-full text-[#E6E0E0] cursor-pointer">
-                Book Now!
-              </div>
             )}
             {userData && (
-              <div>
+              <div className="lg:mr-0 mr-3">
                 {userData.randomAvatar ? (
                   <Image
                     src={avatars[userData.randomAvatar]}
