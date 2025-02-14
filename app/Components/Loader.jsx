@@ -8,8 +8,7 @@ const Loader = ({ height, width }) => {
         src="https://lottie.host/e16377d0-e817-4107-ba53-7109faabb2e9/ZnEZlPqmVm.lottie"
         loop
         autoplay
-        className="w-24 h-24"
-        // className={`w-${width} h-${height}`}
+        className={`w-${width} h-${height}`}
       />
     </div>
   );

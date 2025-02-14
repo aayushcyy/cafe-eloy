@@ -136,28 +136,28 @@ export default function page() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col md:px-28 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar />
-      <div className="w-full h-[90vh] gap-28 flex lg:flex-row flex-col relative">
-        <div className="w-[50%] h-full lg:flex hidden pt-40 justify-center">
+      <div className="w-full h-[90vh] justify-center flex md:flex-row flex-col relative">
+        {/* <div className="w-[50%] h-full md:flex hidden pt-40 justify-center">
           <p className="text-7xl font-bold italic -rotate-6">
             {showSignup ? "Sign up" : "Login"} to <br /> get started
           </p>
-        </div>
+        </div> */}
 
         {/* Login form */}
         {!showSignup && (
           <form
-            className="lg:w-[30%] flex px-10 flex-col pt-10"
+            className="md:w-[35vw] flex px-10 flex-col pt-10"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">
-              <p className="lg:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
+              <p className="md:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
                 Login
               </p>
-              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 md:py-1 py-0.5 rounded-md">
                 <AtSymbolIcon
-                  className="lg:size-5 size-4 text-[#807f7f]"
+                  className="md:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -171,9 +171,9 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg mb-1">
+              <div className="flex items-center bg-[#ffffff8a] px-2 md:py-1 py-0.5 rounded-md mb-1">
                 <KeyIcon
-                  className="lg:size-5 size-4 text-[#807f7f]"
+                  className="md:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -187,13 +187,13 @@ export default function page() {
                 />
                 {showPassword ? (
                   <EyeIcon
-                    className="lg:size-6 size-5 cursor-pointer text-[#2aa1f1]"
+                    className="md:size-6 size-5 cursor-pointer text-[#2aa1f1]"
                     strokeWidth="2"
                     onClick={() => setShowPassword(!showPassword)}
                   />
                 ) : (
                   <EyeSlashIcon
-                    className="lg:size-5 size-5 cursor-pointer text-[#2aa1f1]"
+                    className="md:size-5 size-5 cursor-pointer text-[#2aa1f1]"
                     strokeWidth="2"
                     onClick={() => setShowPassword(!showPassword)}
                   />
@@ -201,7 +201,7 @@ export default function page() {
               </div>
               <div>
                 <button
-                  className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-lg text-center text-white"
+                  className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-md text-center text-white"
                   onClick={handleLogin}
                 >
                   Login
@@ -227,7 +227,7 @@ export default function page() {
                 <p className="text-xs text-[#807f7f]">or</p>
                 <div className="w-20 h-[1px] bg-[#807f7f]"></div>
               </div>
-              <div className="flex items-center justify-center gap-2 mt-8 text-sm font-medium bg-[#c3c3c3] px-2 py-2 rounded-lg w-full">
+              <div className="flex items-center justify-center gap-2 mt-8 text-sm font-medium bg-[#c3c3c3] px-2 py-2 rounded-md w-full">
                 <GlobeAltIcon className="size-5" strokeWidth="2" />
                 Continue with Google
               </div>
@@ -238,16 +238,16 @@ export default function page() {
         {/* Sign up form */}
         {showSignup && (
           <form
-            className="lg:w-[30%] flex px-10 flex-col pt-7"
+            className="md:w-[35vw] flex px-10 flex-col pt-7"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">
-              <p className="lg:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
+              <p className="md:text-3xl text-xl font-semibold my-8 text-[#331A0B]">
                 Sign up
               </p>
-              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 md:py-1 py-0.5 rounded-md">
                 <UserIcon
-                  className="lg:size-5 size-4 text-[#807f7f]"
+                  className="md:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -259,9 +259,9 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 md:py-1 py-0.5 rounded-md">
                 <AtSymbolIcon
-                  className="lg:size-5 size-4 text-[#807f7f]"
+                  className="md:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -275,9 +275,9 @@ export default function page() {
                   //readOnly={inputReadOnly}
                 />
               </div>
-              <div className="flex items-center bg-[#ffffff8a] px-2 lg:py-1 py-0.5 rounded-lg">
+              <div className="flex items-center bg-[#ffffff8a] px-2 md:py-1 py-0.5 rounded-md">
                 <KeyIcon
-                  className="lg:size-5 size-4 text-[#807f7f]"
+                  className="md:size-5 size-4 text-[#807f7f]"
                   strokeWidth="2"
                 />
                 <input
@@ -310,7 +310,7 @@ export default function page() {
               )}
               <div className="mt-2">
                 <button
-                  className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-lg text-center text-white"
+                  className="bg-red-500 text-sm w-full font-medium px-4 py-2 rounded-md text-center text-white"
                   onClick={handleSignup}
                 >
                   Sign up
@@ -336,7 +336,7 @@ export default function page() {
                 <p className="text-xs text-[#807f7f]">or</p>
                 <div className="w-20 h-[1px] bg-[#807f7f]"></div>
               </div>
-              <div className="flex items-center justify-center gap-2 mt-8 text-sm font-medium bg-[#c3c3c3] px-2 py-2 rounded-lg w-full">
+              <div className="flex items-center justify-center gap-2 mt-8 text-sm font-medium bg-[#c3c3c3] px-2 py-2 rounded-md w-full">
                 <GlobeAltIcon className="size-5" strokeWidth="2" />
                 Continue with Google
               </div>

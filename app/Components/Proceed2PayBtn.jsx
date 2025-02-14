@@ -105,18 +105,18 @@ export default function Proceed2PayBtn({ bookingId }) {
   };
 
   return (
-    <div className="lg:w-[60%] w-[55%] flex justify-center flex-col items-center">
+    <div className="md:w-[80%] w-[55%] flex justify-center flex-col items-center">
       {loading && !bookingSuccessMsg && <Loader height={16} width={16} />}
       {!loading && !bookingSuccessMsg && (
         <button
-          className="w-full text-center lg:text-base text-[14px] font-[400] cursor-pointer bg-red-500 hover:bg-[#dc3636] text-white lg:py-2 py-1.5 rounded-md"
+          className="w-full text-center md:text-base text-[14px] font-[400] cursor-pointer bg-red-500 hover:bg-[#dc3636] text-white md:py-2 py-1.5 rounded-md"
           onClick={handleSubmit}
         >
           Proceed to Payment
         </button>
       )}
       {bookingSuccessMsg && (
-        <div className="lg:font-medium text-sm">Booking Successful!</div>
+        <div className="md:font-medium text-sm">Booking Successful!</div>
       )}
     </div>
   );

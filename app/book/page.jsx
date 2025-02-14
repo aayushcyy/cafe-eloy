@@ -238,28 +238,28 @@ export default function page() {
     : convertDate(dateValue.toLowerCase());
 
   return (
-    <div className="w-full h-screen flex flex-col lg:gap-0 gap-16 lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col md:gap-0 gap-16 md:px-28 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
-      <div className="w-full h-[90vh] flex lg:flex-row lg:justify-center lg:px-0 flex-col gap-3 px-6">
+      <div className="w-full h-[90vh] flex md:flex-row md:justify-center md:px-0 flex-col gap-3 px-6">
         {/* Input Container */}
-        <div className="lg:w-[50%] lg:flex-col flex flex-col lg:gap-7 lg:relative">
+        <div className="md:w-[50%] md:flex-col flex flex-col md:gap-7 md:relative">
           {/* Location Selector */}
           <div
             ref={locationDivRef}
-            className="lg:flex flex-col  lg:w-[60%] w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:top-0 lg:left-0 absolute lg:relative top-14 left-5"
+            className="md:flex flex-col  md:w-[34vw] w-[88%] md:gap-2 gap-1 md:z-0 z-20 md:top-0 md:left-0 absolute md:relative top-14 left-5"
           >
-            <p className="lg:text-sm text-xs text-gray-400 lg:mb-0 mb-1.5">
+            <p className="md:text-sm text-xs text-gray-400 md:mb-0 mb-1.5">
               Location
             </p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
                 onClick={() => setOptionOpen(!optionOpen)}
-                className="flex items-center justify-between py-2 px-3 cursor-pointer"
+                className="flex items-center justify-between py-2 px-[1vw] cursor-pointer"
               >
-                <p className="font-medium lg:text-base text-[13px]">
+                <p className="font-medium md:text-sm text-[13px]">
                   {locationValue ? locationValue : "Select Location"}
                 </p>{" "}
-                <ChevronDownIcon height={100} className="size-5 lg:size-6" />
+                <ChevronDownIcon height={100} className="size-5 md:size-6" />
               </div>
               {/* Location Selector */}
               {optionOpen && (
@@ -278,7 +278,7 @@ export default function page() {
                       setLocationValue("Samta Colony, Raipur");
                       setOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer lg:text-base text-[13px]"
+                    className="py-2 px-3 cursor-pointer md:text-sm text-[13px]"
                   >
                     Samta Colony, Raipur
                   </p>
@@ -288,7 +288,7 @@ export default function page() {
                       setLocationValue("Jagganath Chowk, Kota, Raipur");
                       setOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer lg:text-base text-[13px]"
+                    className="py-2 px-3 cursor-pointer md:text-sm text-[13px]"
                   >
                     Jagganath Chowk, Kota, Raipur
                   </p>
@@ -299,7 +299,7 @@ export default function page() {
           {/* Date Selector */}
           <div
             ref={dateDivRefLarge}
-            className="hidden flex-col w-[20%] gap-2 lg:flex"
+            className="hidden flex-col w-[11vw] gap-2 md:flex"
           >
             <p className="text-sm text-gray-400">Date</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
@@ -359,15 +359,15 @@ export default function page() {
           </div>
         </div>
         {/* showing booking options */}
-        <div className="lg:w-[40%] w-full flex flex-col">
-          <div className="lg:w-[90%] w-full flex flex-col gap-2">
+        <div className="md:w-[45%] w-full flex flex-col">
+          <div className="md:w-[90%] w-full flex flex-col gap-2">
             <div className="flex justify-between w-full relative">
-              <p className="lg:text-sm text-xs text-gray-400">
+              <p className="md:text-sm text-xs text-gray-400">
                 Available Slots
               </p>
               <div
                 ref={dateDivRef}
-                className="flex flex-col w-[28%] gap-2 lg:hidden absolute right-0 top-0 rounded-b-sm overflow-hidden"
+                className="flex flex-col w-[28%] gap-2 md:hidden absolute right-0 top-0 rounded-b-sm overflow-hidden"
               >
                 <div className="flex flex-col text-sm rounded-md">
                   <div
@@ -429,7 +429,7 @@ export default function page() {
                 <Loader height={80} width={80} />
               </div>
             ) : (
-              <div className="flex flex-col gap-[10px] h-[75vh] lg:pr-5 overflow-y-scroll pb-10">
+              <div className="flex flex-col md:w-[100%] item-center gap-[10px] h-[75vh] md:pr-5 overflow-y-scroll pb-10">
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
@@ -463,7 +463,7 @@ export default function page() {
                   ))
                 ) : (
                   <p
-                    className="lg:text-sm text-xs font-medium text-center lg:mt-0 mt-40
+                    className="md:text-sm text-xs font-medium text-center md:mt-0 mt-40
                   "
                   >
                     Please Select Date and Branch to see the Availability
