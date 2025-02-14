@@ -234,19 +234,19 @@ export default function page() {
   return (
     <div className="w-full h-screen flex flex-col lg:gap-0 gap-16 lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
-      <div className="w-full h-[90vh] flex lg:flex-row  lg:px-0 flex-col justify-center px-5">
+      <div className="w-full h-[90vh] flex lg:flex-row  lg:px-0 flex-col gap-3 px-6">
         {/* Input Container */}
         <div className="lg:w-[40%] lg:flex-row flex flex-col lg:gap-7">
           {/* Location Selector */}
           <div
             ref={locationDivRef}
-            className="flex flex-col w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:block lg:top-0 lg:left-0 absolute top-12 left-5"
+            className="flex flex-col w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:block lg:top-0 lg:left-0 absolute top-14 left-5"
           >
             <p className="lg:text-sm text-xs text-gray-400">Location</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
                 onClick={() => setOptionOpen(!optionOpen)}
-                className="flex items-center justify-between lg:py-2 px-3 py-1.5 cursor-pointer"
+                className="flex items-center justify-between py-2 px-3 cursor-pointer"
               >
                 <p className="font-medium lg:text-base text-[13px]">
                   {locationValue ? locationValue : "Select Location"}
