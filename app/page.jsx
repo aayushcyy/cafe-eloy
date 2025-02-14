@@ -7,10 +7,10 @@ export default function Home() {
   return (
     <div className="w-full h-screen flex flex-col md:px-28 px-0 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar />
-      <div className="flex w-full md:h-[80vh] h-[90vh] md:px-5 px-5 md:justify-between">
-        <div className="md:w-[50%]  md:pt-[24vh] flex flex-col gap-10">
+      <div className="flex w-full md:h-[80vh] h-[90vh] md:px-5 lg:px-10 px-5 md:justify-between">
+        <div className="md:w-[50%] lg:w-[45%] md:pt-[24vh] lg:pt-[20vh] pt-40 flex flex-col gap-10">
           <div className="w-[100%] font-tannimbus font-semibold italic">
-            <p className="md:text-[5.5vw] text-start text-5xl">
+            <p className="md:text-[5.5vw] lg:text-[4vw] text-start text-5xl">
               It's not about Food, it's about an Experience.
             </p>
           </div>
@@ -30,7 +30,7 @@ export default function Home() {
               View Menu!
             </Button>
           </div>
-          <div className="flex flex-col gap-3 md:mt-16">
+          <div className="flex flex-col gap-3 md:mt-16 lg:mt-8">
             <p className="font-semibold md:text-sm text-[14px]">Reviews</p>
             <Button to={`${"/"}`}>
               <div className="flex">
@@ -49,8 +49,8 @@ export default function Home() {
           <Image
             src={pasta} // The imported image
             alt="Pasta Dish" // Important for accessibility
-            width={100}
-            height={100}
+            width={528}
+            height={528}
             objectFit="cover"
             className="absolute z-20 md:w-[50vw]"
           />

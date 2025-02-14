@@ -298,7 +298,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
           <motion.div
             initial={{ opacity: 0, right: -200 }}
             animate={{ opacity: 1, right: 0, ease: "circInOut" }}
-            className="bg-[white] h-screen md:w-[43%] md:px-4 md:py-4 md:gap-5 w-[75%] px-3 py-4 right-0 absolute flex flex-col gap-2"
+            className="bg-[white] h-screen md:w-[43%] lg:w-[25%] md:px-4 md:py-4 md:gap-5 w-[75%] px-3 py-4 right-0 absolute flex flex-col gap-2"
           >
             <div ref={profileDivRef} className="flex flex-col md:gap-3 gap-1">
               {/* Back Button */}

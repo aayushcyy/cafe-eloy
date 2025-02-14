@@ -138,7 +138,7 @@ export default function page() {
   return (
     <div className="w-full h-screen flex flex-col md:px-28 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar />
-      <div className="w-full h-[90vh] justify-center flex md:flex-row flex-col relative">
+      <div className="w-full h-[90vh] md:justify-center flex md:flex-row flex-col relative">
         {/* <div className="w-[50%] h-full md:flex hidden pt-40 justify-center">
           <p className="text-7xl font-bold italic -rotate-6">
             {showSignup ? "Sign up" : "Login"} to <br /> get started
@@ -148,7 +148,7 @@ export default function page() {
         {/* Login form */}
         {!showSignup && (
           <form
-            className="md:w-[35vw] flex px-10 flex-col pt-10"
+            className="md:w-[35vw] lg:w-[25vw] flex px-10 flex-col pt-20"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">
@@ -238,7 +238,7 @@ export default function page() {
         {/* Sign up form */}
         {showSignup && (
           <form
-            className="md:w-[35vw] flex px-10 flex-col pt-7"
+            className="md:w-[35vw] lg:w-[25vw] flex px-10 flex-col pt-7"
             //onSubmit={}
           >
             <div className="flex flex-col gap-2">

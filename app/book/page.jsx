@@ -238,15 +238,15 @@ export default function page() {
     : convertDate(dateValue.toLowerCase());
 
   return (
-    <div className="w-full h-screen flex flex-col md:gap-0 gap-16 md:px-28 bg-[#E6E0E0] text-primaryText font-montserrat">
+    <div className="w-full h-screen flex flex-col md:gap-0 lg:gap-2 gap-16 md:px-28 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
-      <div className="w-full h-[90vh] flex md:flex-row md:justify-center md:px-0 flex-col gap-3 px-6">
+      <div className="w-full h-[90vh] flex md:flex-row md:justify-center lg:justify-center md:px-0 flex-col gap-3 px-6">
         {/* Input Container */}
-        <div className="md:w-[50%] md:flex-col flex flex-col md:gap-7 md:relative">
+        <div className="md:w-[50%] lg:w-[45%] md:flex-col flex flex-col md:gap-7 md:relative">
           {/* Location Selector */}
           <div
             ref={locationDivRef}
-            className="md:flex flex-col  md:w-[34vw] w-[88%] md:gap-2 gap-1 md:z-0 z-20 md:top-0 md:left-0 absolute md:relative top-14 left-5"
+            className="md:flex flex-col lg:w-[23vw] md:w-[34vw] w-[88%] md:gap-2 gap-1 md:z-0 z-20 md:top-0 md:left-0 absolute md:relative top-14 left-5"
           >
             <p className="md:text-sm text-xs text-gray-400 md:mb-0 mb-1.5">
               Location
@@ -359,15 +359,15 @@ export default function page() {
           </div>
         </div>
         {/* showing booking options */}
-        <div className="md:w-[45%] w-full flex flex-col">
-          <div className="md:w-[90%] w-full flex flex-col gap-2">
+        <div className="md:w-[45%] lg:items-center lg:w-[30%] w-full flex flex-col">
+          <div className="md:w-[90%] lg:w-full w-full flex flex-col lg:justify-center gap-2">
             <div className="flex justify-between w-full relative">
               <p className="md:text-sm text-xs text-gray-400">
                 Available Slots
               </p>
               <div
                 ref={dateDivRef}
-                className="flex flex-col w-[28%] gap-2 md:hidden absolute right-0 top-0 rounded-b-sm overflow-hidden"
+                className="flex flex-col w-[28%] gap-2 md:hidden lg:hidden lg:left-0 absolute right-0 top-0 rounded-b-sm overflow-hidden"
               >
                 <div className="flex flex-col text-sm rounded-md">
                   <div
@@ -426,10 +426,10 @@ export default function page() {
             </div>
             {loading ? (
               <div className="flex items-center justify-center">
-                <Loader height={80} width={80} />
+                <Loader height={40} width={40} />
               </div>
             ) : (
-              <div className="flex flex-col md:w-[100%] item-center gap-[10px] h-[75vh] md:pr-5 overflow-y-scroll pb-10">
+              <div className="flex flex-col md:w-[100%] lg:w-full item-center gap-[10px] h-[75vh] md:pr-0 lg:pr-5 overflow-y-scroll pb-10">
                 {slotsData ? (
                   Object.entries(slotsData).map(([timeSlot, isAvailable]) => (
                     <div
@@ -463,7 +463,7 @@ export default function page() {
                   ))
                 ) : (
                   <p
-                    className="md:text-sm text-xs font-medium text-center md:mt-0 mt-40
+                    className="md:text-sm lg:w-full lg:text-start text-xs font-medium text-center md:mt-0 mt-40
                   "
                   >
                     Please Select Date and Branch to see the Availability
