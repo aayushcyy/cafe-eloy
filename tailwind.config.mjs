@@ -12,6 +12,8 @@ export default {
         foreground: "var(--foreground)",
         primaryRed: "#d21c27",
         primaryText: "#331a0b",
+        darkSecondary: "#2f2f2f47",
+        darkTernary: "#282828",
       },
       fontFamily: {
         montserrat: ["var(--font-montserrat)", "sans-serif"],
