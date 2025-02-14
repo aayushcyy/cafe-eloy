@@ -15,13 +15,14 @@ import { usePathname } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import useMyStore from "../store/store";
 import { useRouter } from "next/navigation";
+import Loader from "./Loader";
 
 export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
   //hover animation hooks
   const [animateHover, setAnimateHover] = useState(false);
   const [animateHover2, setAnimateHover2] = useState(false);
   const [animateHover3, setAnimateHover3] = useState(false);
-  const [animateHover4, setAnimateHover4] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [userData, setUserData] = useState(null);
   const [userBookings, setUserBookings] = useState(null);
@@ -83,6 +84,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
     setOpenProfile(!openProfile);
     if (!userData || !userData.email) return;
     try {
+      setLoader(true);
       const response = await fetch("/api/database/getBooking", {
         method: "POST",
         headers: {
@@ -98,6 +100,8 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
       setUserBookings(data.data.bookings);
     } catch (error) {
       console.error("Error fetching booking data:", error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -331,6 +335,7 @@ export default function Navbar({ showBook, showBook2, isUsserLoggedIn }) {
                   <div className="flex flex-col gap-3 rounded-md">
                     <p className="lg:text-base text-xs">Upcoming bookings</p>
                     <div className="flex flex-col gap-3 rounded-md">
+                      {loader && <Loader width={20} height={20} />}
                       {upcomingBooking.length > 0 ? (
                         upcomingBooking.map((booking) => (
                           <div

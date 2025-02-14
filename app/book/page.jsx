@@ -141,8 +141,8 @@ export default function page() {
     }
   }, [dateValue, locationValue]);
 
+  //setting cookies to get values in dynamic page
   const handleSlotClick = (isAvailable, timeSlot) => {
-    //setting cookies to get values in dynamic page
     const userCookie = getCookie("user");
     if (userCookie) {
       try {
@@ -166,7 +166,6 @@ export default function page() {
   };
 
   //finding todays date and current time hour
-
   const today = new Date();
   const currentHour = today.getHours();
   const formattedToday = today.toISOString().split("T")[0];
@@ -234,13 +233,13 @@ export default function page() {
   return (
     <div className="w-full h-screen flex flex-col lg:gap-0 gap-16 lg:px-36 bg-[#E6E0E0] text-primaryText font-montserrat">
       <Navbar showBook={false} isUsserLoggedIn={isUsserLoggedIn} />
-      <div className="w-full h-[90vh] flex lg:flex-row  lg:px-0 flex-col gap-3 px-6">
+      <div className="w-full h-[90vh] flex lg:flex-row lg:justify-center lg:px-0 flex-col gap-3 px-6">
         {/* Input Container */}
-        <div className="lg:w-[40%] lg:flex-row flex flex-col lg:gap-7">
+        <div className="lg:w-[50%] lg:flex-col flex flex-col lg:gap-7 lg:relative">
           {/* Location Selector */}
           <div
             ref={locationDivRef}
-            className="flex flex-col w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:block lg:top-0 lg:left-0 absolute top-14 left-5"
+            className="lg:flex flex-col  lg:w-[60%] w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:top-0 lg:left-0 absolute lg:relative top-14 left-5"
           >
             <p className="lg:text-sm text-xs text-gray-400">Location</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
@@ -320,7 +319,7 @@ export default function page() {
                       setDateValue("Today");
                       setDateOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer"
+                    className="py-2 px-3 cursor-pointer hover:bg-red-100"
                   >
                     Today
                   </p>
@@ -329,8 +328,9 @@ export default function page() {
                     onClick={() => {
                       setDateValue(tommDate);
                       setDateOptionOpen(false);
+                      console.log("tommDate: ", tommDate);
                     }}
-                    className="py-2 px-3 cursor-pointer"
+                    className="py-2 px-3 cursor-pointer hover:bg-red-100"
                   >
                     {tommDate.slice(0, -2)}
                   </p>
@@ -340,7 +340,7 @@ export default function page() {
                       setDateValue(afterTommDate);
                       setDateOptionOpen(false);
                     }}
-                    className="py-2 px-3 cursor-pointer"
+                    className="py-2 px-3 cursor-pointer hover:bg-red-100"
                   >
                     {afterTommDate.slice(0, -2)}
                   </p>
