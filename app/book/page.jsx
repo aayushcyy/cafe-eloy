@@ -17,6 +17,7 @@ export default function page() {
   const [dateValue, setDateValue] = useState("Today");
   const [optionOpen, setOptionOpen] = useState(false);
   const [dateOptionOpen, setDateOptionOpen] = useState(false);
+  const [largeDateOptionOpen, setLargeDateOptionOpen] = useState(false);
   const [tommDate, setTommDate] = useState("");
   const [afterTommDate, setAfterTommDate] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ export default function page() {
   const [isUsserLoggedIn, setIsUsserLoggedIn] = useState(false);
   const locationDivRef = useRef(null);
   const dateDivRef = useRef(null);
+  const dateDivRefLarge = useRef(null);
   const router = useRouter();
 
   //extracting zustand values
@@ -53,6 +55,11 @@ export default function page() {
     //handling outside click of inputs
     const handleClickOutside = (e) => {
       if (!locationDivRef.current.contains(e.target)) setOptionOpen(false);
+      if (
+        dateDivRefLarge.current &&
+        !dateDivRefLarge.current.contains(e.target)
+      )
+        setLargeDateOptionOpen(false);
       if (!dateDivRef.current.contains(e.target)) setDateOptionOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -241,7 +248,9 @@ export default function page() {
             ref={locationDivRef}
             className="lg:flex flex-col  lg:w-[60%] w-[88%] lg:gap-2 gap-1 lg:z-0 z-20 lg:top-0 lg:left-0 absolute lg:relative top-14 left-5"
           >
-            <p className="lg:text-sm text-xs text-gray-400">Location</p>
+            <p className="lg:text-sm text-xs text-gray-400 lg:mb-0 mb-1.5">
+              Location
+            </p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
                 onClick={() => setOptionOpen(!optionOpen)}
@@ -289,13 +298,13 @@ export default function page() {
           </div>
           {/* Date Selector */}
           <div
-            ref={dateDivRef}
+            ref={dateDivRefLarge}
             className="hidden flex-col w-[20%] gap-2 lg:flex"
           >
             <p className="text-sm text-gray-400">Date</p>
             <div className="flex flex-col bg-white text-sm rounded-md">
               <div
-                onClick={() => setDateOptionOpen(!dateOptionOpen)}
+                onClick={() => setLargeDateOptionOpen(!largeDateOptionOpen)}
                 className="flex items-center justify-between py-2 cursor-pointer px-3"
               >
                 <p className="font-medium">
@@ -303,7 +312,7 @@ export default function page() {
                 </p>{" "}
                 <ChevronDownIcon height={20} />
               </div>
-              {dateOptionOpen && (
+              {largeDateOptionOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -317,7 +326,7 @@ export default function page() {
                   <p
                     onClick={() => {
                       setDateValue("Today");
-                      setDateOptionOpen(false);
+                      setLargeDateOptionOpen(false);
                     }}
                     className="py-2 px-3 cursor-pointer hover:bg-red-100"
                   >
@@ -327,7 +336,7 @@ export default function page() {
                   <p
                     onClick={() => {
                       setDateValue(tommDate);
-                      setDateOptionOpen(false);
+                      setLargeDateOptionOpen(false);
                       console.log("tommDate: ", tommDate);
                     }}
                     className="py-2 px-3 cursor-pointer hover:bg-red-100"
@@ -338,7 +347,7 @@ export default function page() {
                   <p
                     onClick={() => {
                       setDateValue(afterTommDate);
-                      setDateOptionOpen(false);
+                      setLargeDateOptionOpen(false);
                     }}
                     className="py-2 px-3 cursor-pointer hover:bg-red-100"
                   >
