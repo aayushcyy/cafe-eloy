@@ -27,7 +27,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Cafe Ziq5 | Samta Colony, Raipur | Kota, Raipur",
+  title: "Cafe Eloy",
   description: "Eat, Relax and Repeat!",
 };
 
